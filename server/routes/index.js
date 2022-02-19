@@ -56,19 +56,26 @@ router.post('/generateqr', verifyJwtInUser, async (req, res) => {
 //REDEEM TOKEN FROM CAFETERIA
 router.post('/redeemtoken', verifyJwtInUser, async (req, res) => {
   try {
-    const token = await FoodToken.findOne({ qrLink: req.body.qrLink });
-    if (!token) {
-      return res
-        .status(404)
-        .json({ message: 'Food Token not found or has already been redeemed' });
+    if (req.category.categoryId == 'cafe') {
+      const token = await FoodToken.findOne({ qrLink: req.body.qrLink });
+      if (!token) {
+        return res.status(404).json({
+          message: 'Food Token not found or has already been redeemed',
+        });
+      }
+      await FoodToken.deleteOne({ qrLink: req.body.qrLink });
+      return res.send({
+        success: true,
+        data: token,
+        msg: 'Token Redeemed Successfully',
+      });
+    } else {
+      //you cannot redeem
+      return res.status(403).json({
+        message:
+          'You cannot redeem this token. Please get it scanned by MIT Cafeteria only',
+      });
     }
-    //delete token from foodtoken model
-    await FoodToken.deleteOne({ qrLink: req.body.qrLink });
-    return res.send({
-      success: true,
-      data: token,
-      msg: 'Token deleted from DB',
-    });
   } catch (error) {
     return res.status(500).json({ message: error.toString() });
   }
