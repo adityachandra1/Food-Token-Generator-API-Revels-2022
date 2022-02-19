@@ -5,7 +5,7 @@ const generateAuthJwt = async (category) => {
   try {
     const payload = {
       categoryId: category.categoryId,
-      category: category.category,
+      categoryName: category.categoryName,
     };
 
     const signedToken = await jwt.sign(payload, process.env.AUTH_SECRET, {

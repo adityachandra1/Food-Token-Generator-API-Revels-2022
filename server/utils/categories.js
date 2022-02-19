@@ -1,201 +1,208 @@
-const categories = [
+module.exports = [
+  {
+    categoryId: 'superadmin',
+    categoryName: 'Superadmin',
+    email: 'superdummy@gmail.com', //to be changed
+  },
+  {
+    categoryId: 'cafe',
+    categoryName: 'Cafeteria',
+    email: 'mitdummycafeteria@gmail.com', //to be changed
+  },
   {
     categoryId: 'sys',
-    category: 'System Admin And Web Dev',
+    categoryName: 'System Admin And Web Dev',
     email: 'webdevrevels22@gmail.com',
   },
   {
     categoryId: 'workshops',
-    category: 'Workshops',
+    categoryName: 'Workshops',
     email: 'workshops.revels22@gmail.com',
   },
   {
     // Infodesk and Finance
     categoryId: 'inf',
-    category: 'Infodesk and Finance',
+    categoryName: 'Infodesk and Finance',
     email: 'inf.revels2022@gmail.com',
   },
   {
     // App Dev
     categoryId: 'app',
-    category: 'App Dev',
+    categoryName: 'App Dev',
     email: 'appdev.revels22@gmail.com',
   },
   {
     categoryId: 'proshow',
-    category: 'ProShow',
+    categoryName: 'ProShow',
     email: 'proshow.revels22@gmail.com',
   },
   {
     categoryId: 'certificate',
-    category: 'Certificates and Prizes',
+    categoryName: 'Certificates and Prizes',
     email: 'logisticsrevels2022@gmail.com',
   },
   {
     categoryId: 'logistics',
-    category: 'Logistics',
+    categoryName: 'Logistics',
     email: 'cnp.revels22@gmail.com',
   },
   {
     categoryId: 'vigilance',
-    category: 'Vigilance',
+    categoryName: 'Vigilance',
     email: 'vigilance.revels22@gmail.com',
   },
   {
     categoryId: 'photography',
-    category: 'Photography and Videography',
+    categoryName: 'Photography and Videography',
     email: 'pav.revels22@gmail.com ',
   },
   {
     categoryId: 'informals',
-    category: 'Informals',
+    categoryName: 'Informals',
     email: 'informals.revels22@gmail.com',
   },
   {
     categoryId: 'hfs',
-    category: 'HFS',
+    categoryName: 'HFS',
     email: 'hfs.revels22@gmail.com',
   },
   {
     categoryId: 'judges',
-    category: 'Judges',
+    categoryName: 'Judges',
     email: 'judgesrevels22@gmail.com',
   },
 
   {
     categoryId: 'pnp',
-    category: 'Publicity and Printing',
+    categoryName: 'Publicity and Printing',
     email: 'pnprevels22@gmail.com',
   },
   {
     categoryId: 'gaming',
-    category: 'Gaming',
+    categoryName: 'Gaming',
     email: 'gaming.revels22@gmail.com',
   },
   {
     categoryId: 'outstation',
-    category: 'Outstation Management',
+    categoryName: 'Outstation Management',
     email: 'omrevels2022@gmail.com',
   },
 
   {
     categoryId: 'socialmedia',
-    category: 'Social Media',
+    categoryName: 'Social Media',
     email: 'smcc.revels22@gmail.com',
   },
   {
     categoryId: 'operations',
-    category: 'Operations',
+    categoryName: 'Operations',
     email: 'operations.revels22@gmail.com',
   },
   {
     categoryId: 'hrd',
-    category: 'HRD',
+    categoryName: 'HRD',
     email: 'revels.hrd22@gmail.com',
   },
 
   {
     categoryId: 'graphics',
-    category: 'Graphics',
+    categoryName: 'Graphics',
     email: 'graphics.revels22@gmail.com',
   },
   {
     categoryId: 'sponsorhips',
-    category: 'Sponsorships',
+    categoryName: 'Sponsorships',
     email: 'sponsorship.revels22@gmail.com',
   },
 
   {
     categoryId: 'sports',
-    category: 'Sports',
+    categoryName: 'Sports',
     email: 'sports.revels22@gmail.com',
   },
   {
     categoryId: 'Anubhuti',
-    category: 'Anubhuti',
+    categoryName: 'Anubhuti',
     email: 'revelsgoonj22@gmail.com',
   },
   {
     // Infodesk and Finance
     categoryId: 'Ampersand',
-    category: 'Ampersand',
+    categoryName: 'Ampersand',
     email: 'revels.ampersand@gmail.com',
   },
   {
     // App Dev
     categoryId: 'Ergo',
-    category: 'Ergo',
+    categoryName: 'Ergo',
     email: 'ergo.revels@gmail.com',
   },
   {
     categoryId: 'Psychus',
-    category: 'Psychus',
+    categoryName: 'Psychus',
     email: 'psychus.revelsmit@gmail.com',
   },
   {
     categoryId: 'Kalakriti',
-    category: 'Kalakriti',
+    categoryName: 'Kalakriti',
     email: 'revelskalakriti2022@gmail.com',
   },
   {
     categoryId: 'Crescendo',
-    category: 'Crescendo',
+    categoryName: 'Crescendo',
     email: 'crescendo.revelscc@gmail.com',
   },
   {
     categoryId: 'Footloose',
-    category: 'Footloose',
+    categoryName: 'Footloose',
     email: 'footloose.revels@gmail.com',
   },
   {
     categoryId: 'HauteCouture',
-    category: 'Haute Couture',
+    categoryName: 'Haute Couture',
     email: 'hautecouturerevels22@gmail.com',
   },
   {
     categoryId: 'Animania',
-    category: 'Animania',
+    categoryName: 'Animania',
     email: 'revels.animania.mit@gmail.com',
   },
   {
     categoryId: 'Xventure',
-    category: 'Xventure',
+    categoryName: 'Xventure',
     email: 'revels.xventure@gmail.com',
   },
   {
     categoryId: 'HumanLibrary',
-    category: 'Human Library',
+    categoryName: 'Human Library',
     email: 'humanlibrary.revelsmit@gmail.com',
   },
 
   {
     categoryId: 'Lensation',
-    category: 'Lensation',
+    categoryName: 'Lensation',
     email: 'lensation.revels22@gmail.com',
   },
   {
     categoryId: 'Iridescent',
-    category: 'Iridescent',
+    categoryName: 'Iridescent',
     email: 'iridecent.revels22@gmail.com',
   },
   {
     categoryId: 'Altaebir',
-    category: 'Altaebir',
+    categoryName: 'Altaebir',
     email: 'revelsfilmfestival2022@gmail.com',
   },
 
   {
     categoryId: 'Consulere',
-    category: 'Consulere',
+    categoryName: 'Consulere',
 
     email: 'manipalacademy@180dc.org',
   },
   {
     categoryId: 'Dramebaaz',
-    category: 'Dramebaaz',
+    categoryName: 'Dramebaaz',
     email: 'dramebaaz.mit@gmail.com',
   },
 ];
-module.exports = {
-  categories,
-};

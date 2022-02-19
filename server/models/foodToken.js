@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const foodTokenSchema = new mongoose.Schema({
-  qrToken: {
+  qrLink: {
     type: String,
     required: true,
     unique: true,
@@ -11,18 +11,15 @@ const foodTokenSchema = new mongoose.Schema({
     required: true,
   },
   issuedBy: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true,
-    ref: 'Category',
   },
   timestamp: {
     type: Date,
     default: Date.now,
   },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
 });
 
-module.exports = foodToken = mongoose.model('foodtoken', foodTokenSchema);
+module.exports = {
+  FoodToken: mongoose.model('FoodToken', foodTokenSchema),
+};

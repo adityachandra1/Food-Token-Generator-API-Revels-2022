@@ -24,9 +24,7 @@ const creds = async (req, res) => {
       console.log(cat.email);
       const message = credTemplate(cat.category, cat.categoryId, cat.password);
       sendEmail(
-        // *************TO CHANGE*************
-        // cat.email,
-        'rheadhikari@gmail.com',
+        cat.email,
         "Credentials: Food Token Portal- REVELS '22",
         message
       );

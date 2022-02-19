@@ -8,7 +8,6 @@ const categorySchema = new mongoose.Schema({
   categoryId: {
     type: String,
     required: true,
-    unique: true,
   },
   password: {
     type: String,
@@ -16,6 +15,14 @@ const categorySchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    required: true,
+  },
+  token: {
+    type: String,
+  },
+  tokensIssued: {
+    type: Number,
+    default: 0,
   },
 });
 

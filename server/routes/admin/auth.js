@@ -5,14 +5,15 @@ const categories = require('../../utils/categories');
 
 const register = async (req, res) => {
   try {
+    console.log(categories);
     categories.forEach(async (cat) => {
       const result = Math.random().toString(36).substring(2, 7);
-      const pass = cat.id + '_' + result;
+      const pass = cat.categoryId + '_' + result;
       // const salt = await bcrypt.genSalt(10);
       // const hash = await bcrypt.hash(pass, salt);
       const newCategory = new Category({
-        categoryId: cat.id,
-        category: cat.title,
+        categoryId: cat.categoryId,
+        categoryName: cat.categoryName,
         email: cat.email,
         password: pass,
         token: null,
@@ -20,13 +21,11 @@ const register = async (req, res) => {
       await newCategory.save();
     });
     return res.status(200).json({
-      message: {
-        message: 'Categories Successfully Registered',
-        success: true,
-      },
+      message: 'Categories Successfully Registered',
+      success: true,
     });
   } catch (error) {
-    return res.status(500).json({ message: error.toString(), success: false });
+    return res.status(500).json({ message: error, success: false });
   }
 };
 
@@ -43,9 +42,10 @@ const login = async (req, res) => {
     if (!isValid) return res.status(401).json({ message: 'Invalid password' });
 
     const jwt = await jwtUtils.generateAuthJwt(category);
+    console.log(jwt);
 
     const tokenArray = jwt.token.split(' ');
-
+    console.log(tokenArray);
     const jwtToken = tokenArray[1];
 
     const token = await Token.findOneAndUpdate(

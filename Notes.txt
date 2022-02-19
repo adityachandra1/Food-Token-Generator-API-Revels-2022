@@ -1,0 +1,4 @@
+each category only one person can give tokens
+will send unique qrLink to frontend where frontend will generate the qrcode to be scanned
+on scanning by anyone nothing happens will only show if link valid or not by checking isActive
+if user scanning is cafeteria person then can be redeemed on scanning

@@ -10,12 +10,13 @@ function App() {
     try {
       const res = await axios({
         method: 'POST',
-        url: 'http://localhost:5000/api/scan',
+        url: 'http://localhost:5000/api/generateqr',
         body: {
           email: email,
         },
       });
-      console.log('res', res);
+      console.log('res', res); //has the url which needs to be mapped with qr code
+      //redirect to new url which will show the qr code since the user is not logged in via cafeteria credentials it cannot be availed
     } catch (err) {
       console.log('err', err);
     }
