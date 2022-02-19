@@ -1,23 +1,23 @@
-import React from "react";
-import "./App.css";
-import axios from "axios";
+import React from 'react';
+import './App.css';
+import axios from 'axios';
 
 function App() {
-  const [token, setToken] = React.useState("");
+  const [email, setEmail] = React.useState('');
 
-  const generateQR = async (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
     try {
-      console.log("call");
-      let stringdata = JSON.stringify(token);
       const res = await axios({
-        method: "POST",
-        url: "http://localhost:5000/api/scan",
-        // body: stringdata,
+        method: 'POST',
+        url: 'http://localhost:5000/api/scan',
+        body: {
+          email: email,
+        },
       });
-      console.log("res", res);
+      console.log('res', res);
     } catch (err) {
-      console.log("err", err);
+      console.log('err', err);
     }
   };
 
@@ -25,19 +25,19 @@ function App() {
     <div class="container">
       <h1 class="text-center">QR CODE GENERATOR</h1>
 
-      <p>Please type the URL or Text below and click Generate!</p>
-      <form class="form" onSubmit={generateQR}>
+      <p>Please type in Email ID of the person who you are issuing token to:</p>
+      <form class="form" onSubmit={sendEmail}>
         <input
           name="text"
           className="form-control"
-          placeholder="URL or Text"
+          placeholder="Email ID"
           type="text"
           required
-          onChange={(e) => setToken(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <br />
         <button type="submit" className="btn btn-primary" value="Get QR">
-          Generate
+          Send Mail
         </button>
       </form>
     </div>
