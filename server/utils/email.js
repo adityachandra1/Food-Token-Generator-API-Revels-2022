@@ -13,8 +13,9 @@ const sendEmail = async (to, subject, message) => {
     var transporter = nodemailer.createTransport(smtpConfig);
     var mailOptions = {
       from: '"System Admin - Revels" <webdevrevels22@gmail.com>', // sender address
-      // // *************TO CHANGE*************// *************TO CHANGE*************// *************TO CHANGE*************// *************TO CHANGE*************// *************TO CHANGE*************
+      // *************TO CHANGE*************
       // to: to, // list of receivers
+      // BE CAREFUL WITH THIS CHANGE ON PRODUCTION TO REAL DATA, THIS IS ONLY FOR TESTING
       to: ['rheadhikari@gmail.com'],
       subject: subject, // Subject line
       text: subject, // plaintext body
