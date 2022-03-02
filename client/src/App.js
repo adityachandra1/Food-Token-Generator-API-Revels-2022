@@ -1,48 +1,48 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AdminLogin from './components/admin/AdminLogin';
+
+import './reset.css';
+import Landing from './components/Landing';
+import Admin from './components/admin/Admin';
+import { Toaster } from 'react-hot-toast';
+import AuthProvider, { useAuth } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
+import SuperAdmin from './components/admin/SuperAdmin';
 import axios from 'axios';
-
-function App() {
-  const [email, setEmail] = React.useState('');
-
-  const sendEmail = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios({
-        method: 'POST',
-        url: 'http://localhost:5000/api/generateqr',
-        body: {
-          email: email,
-        },
-      });
-      console.log('res', res); //has the url which needs to be mapped with qr code
-      //redirect to new url which will show the qr code since the user is not logged in via cafeteria credentials it cannot be availed
-    } catch (err) {
-      console.log('err', err);
-    }
-  };
-
+const App = () => {
+  axios.defaults.baseURL = process.env.REACT_APP_baseUrl;
+  // console.log = console.warn = console.error = () => {};
   return (
-    <div class="container">
-      <h1 class="text-center">QR CODE GENERATOR</h1>
-
-      <p>Please type in Email ID of the person who you are issuing token to:</p>
-      <form class="form" onSubmit={sendEmail}>
-        <input
-          name="text"
-          className="form-control"
-          placeholder="Email ID"
-          type="text"
-          required
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <button type="submit" className="btn btn-primary" value="Get QR">
-          Send Mail
-        </button>
-      </form>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route
+            exact
+            path="/admin/:category"
+            element={
+              <PrivateRoute>
+                <Admin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/admin/SUPERADMIN"
+            element={
+              <PrivateRoute>
+                <SuperAdmin />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+        <Toaster />
+      </AuthProvider>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
