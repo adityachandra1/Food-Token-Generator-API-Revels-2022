@@ -1,3 +1,4 @@
+// DONT SEND MAILS TO THEM TEST WITH YOUR OWN EMAILID
 module.exports = [
   {
     categoryId: 'superadmin',

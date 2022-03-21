@@ -1,3 +1,4 @@
+// CHANGE TO SES
 const nodemailer = require('nodemailer');
 
 // async..await is not allowed in global scope, must use a wrapper
@@ -16,7 +17,7 @@ const sendEmail = async (to, subject, message) => {
       // *************TO CHANGE*************
       // to: to, // list of receivers
       // BE CAREFUL WITH THIS CHANGE ON PRODUCTION TO REAL DATA, THIS IS ONLY FOR TESTING
-      to: ['rheadhikari@gmail.com'],
+      to: ['webdevrevels22@gmail.com'],
       subject: subject, // Subject line
       text: subject, // plaintext body
       html: message, // html body
