@@ -2,3 +2,8 @@ every category will have a dashboard with their respective members and the HR ca
 
 change in original plan ( code needs changes )
 
+superadmin should see category wise stats 
+
+qr code can be sent to volunteers on directly clicking from dashboard
+
+
