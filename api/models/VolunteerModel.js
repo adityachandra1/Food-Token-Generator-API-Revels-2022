@@ -10,6 +10,9 @@ const token_object = {
     },
     isRedeemed: {
         type: Boolean
+    },
+    redeemTime:{
+        type: Date
     }
 }
 

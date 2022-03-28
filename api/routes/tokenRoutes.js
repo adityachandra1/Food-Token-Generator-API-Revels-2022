@@ -4,7 +4,7 @@ const nanoid = require('nanoid');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-const FoodToken = require('../models/tokenModel');
+const Volunteer = require('../models/VolunteerModel');
 const Statistics = require('../models/statisticsModel');
 
 const maxAge = 3 * 60 * 60;
@@ -23,43 +23,43 @@ function isTokenExpired(token) {
 
 router.post('/create-token', async (req, res) => {
     try {
-        const { name, email, category, issuedBy } = req.body;
+        const { email } = req.body;
         const foodToken_jwt = createToken(email);
         let link = 'https://www.google.com/search?q=' + foodToken_jwt;
-        const item = await FoodToken.create({ name, email, category, issuedBy, token: foodToken_jwt, qrLink: link });
-
-        const stats = await Statistics.findOne({ category: token.category });
-        let count = stats.tokensIssued + 1;
-        stats = await Statistics.findOneAndUpdate({ category: token.category }, { tokensIssued: count });
-
-        console.log(item);
-        return res.status(200).json({ message: "Success", data: item });
+        const volun = await Volunteer.findOne({ 'email': email });
+        const tokens_list = volun.foodTokens;
+        const obj = {
+            'issueTime': Date.now(),
+            'token': foodToken_jwt,
+            'isRedeemed': false,
+            'redeemTime': ""
+        }
+        tokens_list.push(obj);
+        await Volunteer.findOneAndUpdate({ 'email': email }, { 'foodTokens': tokens_list });
+        console.log(tokens_list);
+        console.log(volun);
+        return res.status(200).json({ message: "Success", data: volun });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.toString() });
     }
 });
 
-//add hfs check  logged in here
+//add hfs check logged in here
 router.post('/redeem-token', async (req, res) => {
     try {
-        const token = await FoodToken.findOne({ qrLink: req.body.qrLink });
-        if (!token) {
-            return res.status(404).json({
-                message: 'Food Token not found or has already been redeemed',
-            });
+        const toBeRedeemed = req.query.token;
+        const payload = jwt.verify(toBeRedeemed, 'HFS');
+        const volun = await Volunteer.findOne({ 'email': payload.email });
+        const tokens_list = volun.foodTokens;
+        for (obj in tokens_list) {
+            if (obj.token == toBeRedeemed) {
+                isRedemeed = true;
+                redeemTime = Date.now();
+            }
         }
-        
-        const stats = await Statistics.findOne({ category: token.category });
-        let count = stats.tokensRedeemed + 1;
-        stats = await Statistics.findOneAndUpdate({ category: token.category }, { tokensRedeemed: count });
-
-        await FoodToken.deleteOne({ qrLink: req.body.qrLink }); // updte
-        return res.send({
-            success: true,
-            data: token,
-            msg: 'Token Redeemed Successfully',
-        });
+        await Volunteer.findOneAndUpdate({ 'email': payload.email }, { 'foodTokens': tokens_list });
+        return res.status(200).json({ message: "Token Redeemed! for email : " + payload.email });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ message: err.toString() });
