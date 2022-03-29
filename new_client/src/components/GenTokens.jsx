@@ -1,4 +1,5 @@
 import React from "react";
+import { Table, Tag, Space } from 'antd';
 
 const GenTokens = () => {
   const dataSource = [
@@ -7,12 +8,14 @@ const GenTokens = () => {
       name: "Mike",
       age: 32,
       address: "10 Downing Street",
+      btn: <button>Generate Tokens</button>,
     },
     {
       key: "2",
       name: "John",
       age: 42,
       address: "10 Downing Street",
+      btn: <button>Generate Tokens</button>,
     },
   ];
 
@@ -32,8 +35,17 @@ const GenTokens = () => {
       dataIndex: "address",
       key: "address",
     },
+    {
+      title: "Generate Tokens",
+      dataIndex: "btn"
+    }
   ];
-  return <div>GenTokens</div>;
+  
+
+  return (<div>
+    <h1>GenTokens</h1>
+    <Table dataSource={dataSource} columns={columns} />;
+  </div>);
 };
 
 export default GenTokens;

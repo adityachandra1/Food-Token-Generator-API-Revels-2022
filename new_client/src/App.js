@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route exact path="/" element={<Login />} />
-        <Route exact path="/send-tokens" element={GenTokens} />
+        <Route exact path="/send-tokens" element={<GenTokens />} />
       </Routes>
     </div>
   );
