@@ -55,7 +55,7 @@ const Login = (e) => {
             />
           </div>
           <Link to="/send-tokens">
-            <button>Log in to your account</button>
+            <button className="login-btn">Log in to your account</button>
           </Link>
         </form>
       </div>
