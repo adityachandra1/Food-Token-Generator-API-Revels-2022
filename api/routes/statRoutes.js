@@ -4,7 +4,7 @@ const router = express();
 const Volunteer = require('../models/VolunteerModel');
 const Category = require('../models/categoryModel');
 
-const tokenAge = 3 * 60 * 60;
+const tokenAge = 3 * 60 * 60 * 1000;
 
 router.get("/getstats", async(req, res) => {
     const categories = await Category.find({});
@@ -19,7 +19,7 @@ router.get("/getstats", async(req, res) => {
             vol.foodTokens.forEach(function(token) {
                 tokens_given++;
                 if (token.isRedeemed) tokens_redeemed++;
-                if (!token.isRedeemed && (token.issueTime.getTime() - Date.now()) > tokenAge) tokens_expired++;
+                if (!token.isRedeemed && (token.issueTime.getTime() + tokenAge) < Date.now()) tokens_expired++;
             });
         });
         stats[cat.category]["tokensExpired"] = tokens_expired;
