@@ -14,16 +14,7 @@ const createToken = (email) => {
     return jwt.sign({ email }, 'HFS', { expiresIn: maxAge });
 }
 
-function isTokenExpired(token) {
-    const payloadBase64 = token.split('.')[1];
-    const decodedJson = Buffer.from(payloadBase64, 'base64').toString();
-    const decoded = JSON.parse(decodedJson)
-    const exp = decoded.exp;
-    const expired = (Date.now() >= exp * 1000)
-    return expired;
-}
-
-router.post('/create-token', isAdminLoggedIn, hasHRAccess,  async(req, res) => {
+router.post('/create-token', hasHRAccess, isAdminLoggedIn,  async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
@@ -55,7 +46,7 @@ router.post('/create-token', isAdminLoggedIn, hasHRAccess,  async(req, res) => {
 });
 
 //access
-router.post('/token-tester', hasSuperAdminAccess, isAdminLoggedIn, async(req, res) => {
+router.post('/token-tester', isAdminLoggedIn, hasSuperAdminAccess,  async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
@@ -82,7 +73,7 @@ router.post('/token-tester', hasSuperAdminAccess, isAdminLoggedIn, async(req, re
 });
 
 //add hfs check logged in here
-router.post('/redeem-token', isHFS, async(req, res) => {
+router.post('/redeem-token',isAdminLoggedIn,  isHFS,  async(req, res) => {
     try {
         const toBeRedeemed = req.query.token;
         const payload = jwt.verify(toBeRedeemed, 'HFS');
