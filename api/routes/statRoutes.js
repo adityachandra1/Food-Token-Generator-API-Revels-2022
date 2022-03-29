@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express();
 const Volunteer = require('../models/VolunteerModel');
-const Category = require('../models/CategoryModel');
+const Category = require('../models/categoryModel');
 
 const tokenAge = 3 * 60 * 60;
 
