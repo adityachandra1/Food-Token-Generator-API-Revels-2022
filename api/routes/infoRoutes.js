@@ -7,9 +7,13 @@ const router = express.Router();
 
 const Volunteer = require('../models/VolunteerModel');
 const Category = require('../models/categoryModel');
+const {hasSuperAdminAccess, hasHRAccess} = require('../middlewares/accessLevel');
+const {isAdminLoggedIn} = require('../middlewares/auth');
+const {isHFS} = require('../middlewares/category');
 
 
-router.get('/info-volunteer', async (req, res) => {
+
+router.get('/info-volunteer', isAdminLoggedIn , async (req, res) => {
     try {
         const toBeRedeemed = req.query.token;
         const payload = jwt.verify(toBeRedeemed, 'HFS');

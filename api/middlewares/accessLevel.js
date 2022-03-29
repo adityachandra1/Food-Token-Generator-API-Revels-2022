@@ -74,9 +74,27 @@ const hasSuperAdminAccess = async (req, res, next) => {
     }
 };
 
+const hasHRAccess = async (req, res, next) => {
+    try {
+        let user = req.requestAdmin;
+        if (user.role.accessLevel == -1) next();
+        else {
+            return res
+                .status(403)
+                .send({ success: false, msg: 'Access Denied' });
+        }
+    } catch (err) {
+        console.log(err);
+        return res
+            .status(500)
+            .send({ success: false, msg: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     hasReadAccess,
     hasReadWriteAccess,
     hasCategorySuperAdminAccess,
     hasSuperAdminAccess,
+    hasHRAccess,
 };

@@ -1,10 +1,12 @@
 const express = require("express");
-const mongoose = require('mongoose');
-const nanoid = require('nanoid');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 const Volunteer = require('../models/VolunteerModel');
+const Category = require('../models/categoryModel');
+const {hasSuperAdminAccess, hasHRAccess} = require('../middlewares/accessLevel');
+const {isAdminLoggedIn} = require('../middlewares/auth');
+const {isHFS} = require('../middlewares/category');
 
 const maxAge = 3 * 60 * 60 * 1000;
 const limit = 12 * 60 * 60 * 1000;
@@ -21,7 +23,7 @@ function isTokenExpired(token) {
     return expired;
 }
 
-router.post('/create-token', async(req, res) => {
+router.post('/create-token', isAdminLoggedIn, hasHRAccess,  async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
@@ -53,7 +55,7 @@ router.post('/create-token', async(req, res) => {
 });
 
 //access
-router.post('/token-tester', async(req, res) => {
+router.post('/token-tester', hasSuperAdminAccess, isAdminLoggedIn, async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
@@ -80,7 +82,7 @@ router.post('/token-tester', async(req, res) => {
 });
 
 //add hfs check logged in here
-router.post('/redeem-token', async(req, res) => {
+router.post('/redeem-token', isHFS, async(req, res) => {
     try {
         const toBeRedeemed = req.query.token;
         const payload = jwt.verify(toBeRedeemed, 'HFS');

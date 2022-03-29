@@ -3,10 +3,13 @@ const express = require('express');
 const router = express();
 const Volunteer = require('../models/VolunteerModel');
 const Category = require('../models/categoryModel');
+const {hasSuperAdminAccess, hasHRAccess} = require('../middlewares/accessLevel');
+const {isAdminLoggedIn} = require('../middlewares/auth');
+const {isHFS} = require('../middlewares/category');
 
 const tokenAge = 3 * 60 * 60 * 1000;
 
-router.get("/getstats", async(req, res) => {
+router.get("/getstats", isAdminLoggedIn , async(req, res) => {
     const categories = await Category.find({});
     let stats = {};
     for (const cat of categories) {
