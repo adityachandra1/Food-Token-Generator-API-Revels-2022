@@ -1,24 +1,24 @@
 const express = require('express');
-const { count } = require('../models/VolunteerModel');
+const { count, findOne } = require('../models/VolunteerModel');
 const router = express();
 const Volunteer = require('../models/VolunteerModel');
-const Category = require('../models/CategoryModel');
+const Category = require('../models/categoryModel');
 
-router.post("/createvolunteer", async(req, res) => {
-    const { name, email, role, categoryName } = req.body;
-    // Category db not fully populated
-    const cat = await Category.findOne({ category: categoryName });
+router.post("/createvolunteer", async (req, res) => {
     try {
-        const volunteer = await Volunteer.create({ name, email, role });
-        console.log(volunteer);
-        res.send("Successfully registered");
+        const { name, email, role, category } = req.body;
+        // Category db not fully populated
+        const cat = await Category.findOne({ 'category': category });
+        const item = await Volunteer.create({ name, email, role, 'category': cat._id });
+        console.log(item);
+        res.status(200).json(item);
     } catch (err) {
         console.log(err);
         res.status(400, "Error while creating Admin");
     }
 });
 
-router.get("/getvolunteers", async(req, res) => {
+router.get("/getvolunteers", async (req, res) => {
     const categoryName = req.body;
     let volunteers = [];
     if (categoryName.length != undefined) {
