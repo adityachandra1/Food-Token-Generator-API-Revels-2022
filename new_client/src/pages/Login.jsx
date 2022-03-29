@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import logo from "./images/login/logo.png";
 import wave1 from "./images/login/wave1.svg";
 import wave2 from "./images/login/wave2.svg";
-import "./css/login.css";
+import "./CSS/login.css";
 import { Link } from "react-router-dom";
 
 const Login = (e) => {

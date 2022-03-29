@@ -1,8 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import GenTokens from "./components/GenTokens";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import GenTokens from "./pages/GenTokens";
 import "antd/dist/antd.css";
 
 function App() {
