@@ -1,9 +1,19 @@
-import React from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import React, { useState } from "react";
+// import { Form, Input, Button } from "antd";
+import logo from "./images/login/logo.png";
+import wave1 from "./images/login/wave1.svg";
+import wave2 from "./images/login/wave2.svg";
+import "./CSS/login.css";
+import { Link } from "react-router-dom";
 
-const Login = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+const Login = (e) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const onFinish = async (e) => {
+    // e.preventDefault();
+    const json = { email, password };
+
+    console.log("Success:", json);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -11,71 +21,47 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page-holder">
+    <div className="login-main-container">
       <div className="login-container">
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+        <img src={logo} alt="LOGO" />
 
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
+        <form className="login-form-container">
+          <div className="form-block">
+            <label className="login-form-label">Email </label>
+            <br />
+            <input
+              className="login-input"
+              type="email"
+              name=""
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
+          <div className="form-block">
+            <label className="login-form-label">Password </label>
+            <br />
 
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+            <input
+              className="login-input"
+              type="password"
+              name=""
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <Link to="/send-tokens">
+            <button>Login to your account</button>
+          </Link>
+        </form>
+      </div>
+      <div className="waves">
+        <img src={wave1} alt="" className="wave-svg1" />
+        <img src={wave2} alt="" className="wave-svg2" />
       </div>
     </div>
   );
