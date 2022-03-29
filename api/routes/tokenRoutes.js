@@ -21,7 +21,7 @@ function isTokenExpired(token) {
     return expired;
 }
 
-router.post('/create-tonken', async(req, res) => {
+router.post('/create-token', async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
