@@ -7,7 +7,7 @@ const router = express.Router();
 const Volunteer = require('../models/VolunteerModel');
 const Statistics = require('../models/statisticsModel');
 
-const maxAge = 3 * 60 * 60;
+const maxAge = 3 * 60 * 60 * 1000;
 const createToken = (email) => {
     return jwt.sign({ email }, 'HFS', { expiresIn: maxAge });
 }
@@ -21,7 +21,7 @@ function isTokenExpired(token) {
     return expired;
 }
 
-router.post('/create-token', async (req, res) => {
+router.post('/create-token', async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
@@ -46,7 +46,7 @@ router.post('/create-token', async (req, res) => {
 });
 
 //add hfs check logged in here
-router.post('/redeem-token', async (req, res) => {
+router.post('/redeem-token', async(req, res) => {
     try {
         const toBeRedeemed = req.query.token;
         const payload = jwt.verify(toBeRedeemed, 'HFS');
