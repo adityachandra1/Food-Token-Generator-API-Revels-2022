@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const tokenRoutes = require('./routes/tokenRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
+const statRoutes = require('./routes/statRoutes');
 
 const app = express();
 const PORT = 8080;
@@ -28,3 +29,4 @@ app.get("/", function(req, res) {
 
 app.use(tokenRoutes);
 app.use(volunteerRoutes);
+app.use(statRoutes);
