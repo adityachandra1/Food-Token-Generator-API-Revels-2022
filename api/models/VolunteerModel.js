@@ -27,7 +27,7 @@ const VolunteerSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["ORGANISER", "VOLUNTEER"],
+        enum: ["ORGANISER", "VOLUNTEER", "CC", "SC"],
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
