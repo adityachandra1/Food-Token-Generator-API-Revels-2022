@@ -18,7 +18,7 @@ router.post("/createvolunteer", async (req, res) => {
     }
 });
 
-router.get("/getvolunteers", async (req, res) => {
+router.get("/get-volunteers-by-cat", async (req, res) => {
     const categoryName = req.body;
     let volunteers = [];
     if (categoryName.length != undefined) {
