@@ -6,6 +6,8 @@
   background-color: #080808;
   
   /* align-items: center; */
+  display: flex;
+  flex-direction: column;
   
   padding-top: 40px;
 }
@@ -86,8 +88,14 @@
 }
 .container {
   padding-top: 30px;
-  width: 300px;
+  width: 50vw;
   margin: auto;
+  
+}
+.bigcontainer {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
   
 }
 
@@ -95,33 +103,45 @@
   padding: 5px 15px;
   width: 300px;
   height: min-content;
+  
+  position: relative;
 }
 
 .user-list {
-  margin-top: 30px;
+ 
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  height: 31vh;
+  
+  overflow-y: scroll;
+  background: #353537;
 }
 
 .user {
   list-style: none;
-  margin: 10px 0;
+  display: flex;
+  justify-content:space-evenly;
   padding: 10px;
-  background: #eee;
+  color:white;
   
   
 }
 
 .user-id {
-  color: red;
+ 
   margin-right: 20px;
+  position: relative;
+  width:fit-content;
 }
 
 .user-name {
-  color: blue;
+ position: relative;
+ width:fit-content;
 }
 
 .user-age {
   margin-left: auto;
+  position: relative;
+  width:fit-content;
 }

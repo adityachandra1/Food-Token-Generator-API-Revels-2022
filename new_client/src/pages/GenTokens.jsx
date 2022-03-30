@@ -1,4 +1,6 @@
 
+
+import Sidebar from "../components/sidebar";
 import "./CSS/GenTokens.css";
 import React, { useState } from "react";
 
@@ -42,21 +44,33 @@ const GenTokens = () => {
   };
 
   return (
-    <div className="gentokens-page">
-      <div className="list-container">
-        {" "}
-        <h1>Welcome back, Parthiv</h1>
-        <p>System admin and web development</p>
-        <div className="tab-menu">
-          <button className="active">Organisers</button>
-          <button>Core Commitee</button>
-          <button>Volunteers</button>
-        </div>
+   
+     
        
-      </div>
+    <div className="main-page">
+      <Sidebar />
+      <div className="gentokens-page">
 
 
-      <input
+
+        <div className="list-container">
+          {" "}
+          <h1>Welcome back, Parthiv</h1>
+          <p>System admin and web development</p>
+          <div className="tab-menu">
+            <button className="active">Organisers</button>
+            <button>Core Commitee</button>
+            <button>Volunteers</button>
+          </div>
+          <div className="search-container">
+            <p>List of Organisers:-</p>
+            <button>Select all</button>
+          </div>
+        </div>
+      
+
+      <div className="bigcontainer">
+        <input
         type="search"
         value={name}
         onChange={filter}
@@ -70,16 +84,22 @@ const GenTokens = () => {
         {foundUsers && foundUsers.length > 0 ? (
           foundUsers.map((user) => (
             <li key={user.id} className="user">
-                 <span className="user-name">
-                   <input type="checkbox" id="user-id"  /></span>
-              <span className="user-name">{user.name}</span>
-              <span className="user-age">{user.role} </span>
+                 <div className="user-name">
+                   <input  type="checkbox" id="user-id"  />
+                 </div>
+              <div className="user-name">{user.name}</div>
+              <div className="user-age">{user.role} </div>
             </li>
           ))
         ) : (
           <h1>No results found!</h1>
         )}
       </div>
+      
+      </div>
+      </div>
+
+
     </div>
 
     </div>
