@@ -13,6 +13,10 @@ const GenTokens = () => {
           <button>Core Commitee</button>
           <button>Volunteers</button>
         </div>
+        <div className="search-container">
+          <p>List of Organisers:-</p>
+          <button>Select all</button>
+        </div>
       </div>
     </div>
   );

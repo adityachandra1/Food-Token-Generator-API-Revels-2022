@@ -59,3 +59,28 @@
 .active {
   background: #606692;
 }
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.search-container p {
+  margin-bottom: 0;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 22px;
+}
+.search-container button {
+  width: 128px;
+  height: 41.31px;
+  left: 1151px;
+  top: 471px;
+
+  background: #18acff;
+  border-radius: 7px;
+  border: none;
+}
