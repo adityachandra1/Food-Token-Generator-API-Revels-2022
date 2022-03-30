@@ -88,7 +88,7 @@
 }
 .container {
   padding-top: 30px;
-  width: 50vw;
+  width: 40vw;
   margin: auto;
   overflow: auto;
   
@@ -146,7 +146,7 @@
   margin-left: auto;
   position: relative;
   width:fit-content;
-  margin-right: ;
+  margin-right: 2rem;
 }
 
 ::-webkit-scrollbar {
