@@ -84,7 +84,7 @@ const GenTokens = () => {
         {foundUsers && foundUsers.length > 0 ? (
           foundUsers.map((user) => (
             <li key={user.id} className="user">
-                 <div className="user-name">
+                 <div className="user-id">
                    <input  type="checkbox" id="user-id"  />
                  </div>
               <div className="user-name">{user.name}</div>
