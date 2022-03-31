@@ -1,6 +1,5 @@
 
 
-import Sidebar from "../components/sidebar";
 import "./CSS/GenTokens.css";
 import React, { useState } from "react";
 
@@ -48,11 +47,11 @@ const GenTokens = () => {
      
        
     <div className="main-page">
-      <Sidebar />
+
       <div className="gentokens-page">
 
 
-
+      <div className="ellipse"></div>
         <div className="list-container">
           {" "}
           <h1>Welcome back, Parthiv</h1>
@@ -98,9 +97,12 @@ const GenTokens = () => {
       
       </div>
       </div>
-
+      <button className="send-button">
+      SEND
+    </button>
 
     </div>
+    
 
     </div>
   );
