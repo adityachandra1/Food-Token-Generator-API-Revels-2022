@@ -13,6 +13,8 @@ const Category = require("../models/categoryModel");
 // - isOM (For OM Portal)
 // - isINF (For InfoDesk Portal)
 // - isCNF (For CNF Portal)
+// - isHFS (For HFS Portal)
+
 const isSystemAdminCC = (user, category) => {
     return (user.role.accessLevel >= 4 && category.categoryId == "SYS")
 }
