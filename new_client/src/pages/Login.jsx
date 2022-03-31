@@ -5,10 +5,13 @@ import wave1 from "./images/login/wave1.svg";
 import wave2 from "./images/login/wave2.svg";
 import "./CSS/login.css";
 import { Link } from "react-router-dom";
+const axios = require('axios').default;
 
 const Login = (e) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  
   const onFinish = async (e) => {
     // e.preventDefault();
     const json = { email, password };
@@ -19,6 +22,29 @@ const Login = (e) => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  const postPass = (errorInfo) => {
+    
+    
+    console.log(password);
+    axios.post('http://localhost:8080/login', {
+     email:`${email}`,
+     password:`${password}`
+    })
+    .then(function (response) {
+      console.log("1");
+      console.log(response);
+
+    })
+    .catch(function (error) {
+      console.log("2");
+      console.log(error);
+    });
+
+
+
+  };
+
 
   return (
     <div className="login-main-container">
@@ -54,9 +80,9 @@ const Login = (e) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Link to="/send-tokens">
-            <button className="login-btn">Log in to your account</button>
-          </Link>
+         
+            <button className="login-btn" onClick={postPass}>Log in to your account</button>
+         
         </form>
       </div>
       <div className="waves">
