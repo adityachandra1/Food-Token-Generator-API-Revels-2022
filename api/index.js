@@ -8,6 +8,7 @@ const tokenRoutes = require('./routes/tokenRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
 const statRoutes = require('./routes/statRoutes');
 const infoRoutes = require('./routes/infoRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = 8080;
@@ -32,3 +33,4 @@ app.use(tokenRoutes);
 app.use(volunteerRoutes);
 app.use(statRoutes);
 app.use(infoRoutes);
+app.use(authRoutes);
