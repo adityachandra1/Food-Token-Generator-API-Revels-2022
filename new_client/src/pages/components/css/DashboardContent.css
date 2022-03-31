@@ -1,0 +1,230 @@
+.dashboard-part {
+    padding-top: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.pagination {
+    margin-top: -20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.dot {
+    margin-right: 20px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient( 123.3deg, #969696 -47.62%, rgba(196, 196, 196, 0) 166.54%);
+}
+
+.categories {
+    margin-top: 4em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.category {
+    margin-right: 1.8em;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    color: #ffffff;
+}
+
+.active-category {
+    margin-top: -5px;
+    background: rgba(96, 102, 146, 1);
+    border-radius: 36px;
+    padding: 5px 15px;
+}
+
+.list-header {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.list-heading {
+    width: 10em;
+    margin-right: 4em;
+    margin-top: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 25px;
+    color: #cfcdcd;
+}
+
+.search-bar {
+    margin-right: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchInput {
+    border: none;
+    padding: 10px 20px 10px 16px;
+    border-radius: 16px;
+    background: rgba(28, 31, 37, 0.6);
+}
+
+.searchInput::placeholder {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    color: #a0a0a0;
+}
+
+.searchInput:hover,
+.searchInput:focus {
+    border: none;
+}
+
+.search-btn {
+    background: #18acff;
+    width: 120px;
+    height: 40.31px;
+    padding: 0px 18px;
+    border-radius: 7px;
+}
+
+.user-list {
+    margin-top: 1.5em;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 50em;
+    height: 346px;
+    overflow-y: scroll;
+    background: linear-gradient( 111.59deg, #353537 3.77%, rgba(196, 196, 196, 0) 127.39%);
+    background-size: cover;
+    background-color: black;
+    z-index: 2;
+    border-radius: 9px;
+}
+
+.user {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    z-index: 2;
+    color: white;
+}
+
+.user-id {
+    margin-right: 20px;
+    position: relative;
+    width: fit-content;
+    margin: 0 1rem 0 1 rem;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    font: inherit;
+    color: currentColor;
+    width: 16px;
+    height: 16px;
+    background: rgba(18, 18, 18, 1);
+    color: #fff;
+    margin: 0;
+}
+
+input[type="checkbox"]:checked {
+    appearance: none;
+    font: inherit;
+    color: currentColor;
+    width: 16px;
+    height: 16px;
+    background: rgba(134, 143, 211, 1);
+    /* transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); */
+    color: #fff;
+    margin: 0;
+}
+
+.user-name {
+    z-index: 2;
+    position: relative;
+    width: fit-content;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    color: rgba(207, 205, 205, 1);
+}
+
+.user-role {
+    margin-left: auto;
+    position: relative;
+    width: fit-content;
+    margin-right: 2rem;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.mini-text {
+    margin-left: -32em;
+    margin-top: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #fff0f0;
+}
+
+
+/* Token btn */
+
+.TokenBtn {
+    margin-top: 2em;
+    margin-bottom: 4em;
+    margin-left: 25em;
+    background: #868fd3;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    padding: 5px;
+    color: #ffffff;
+}
+
+
+/* ----------scroll kit----------------- */
+
+ ::-webkit-scrollbar {
+    width: 10px;
+}
+
+ ::-webkit-scrollbar-track {
+    background-color: #575757;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+ ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #272727;
+}

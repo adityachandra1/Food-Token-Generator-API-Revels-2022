@@ -1,0 +1,25 @@
+.sidebar-container {
+    margin-left: -5em;
+}
+
+.btn {
+    width: 12.97em;
+    border-radius: 16px;
+    padding: 0.45em 3.125em;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    font-family: "Inter";
+    font-size: 1.125em;
+    line-height: 1.68em;
+    font-weight: 400;
+    border: transparent;
+}
+
+.btn:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.active {
+    background: linear-gradient( 97.24deg, #1f8ebe -0.43%, #440495 58.09%, #440495 102.73%, rgba(33, 182, 230, 0.628826) 146.25%);
+}
