@@ -4,9 +4,9 @@ const router = express.Router();
 
 const Volunteer = require('../models/VolunteerModel');
 const Category = require('../models/categoryModel');
-const {hasSuperAdminAccess, hasHRAccess} = require('../middlewares/accessLevel');
-const {isAdminLoggedIn} = require('../middlewares/auth');
-const {isHFS} = require('../middlewares/category');
+const { hasSuperAdminAccess, hasHRAccess } = require('../middlewares/accessLevel');
+const { isAdminLoggedIn } = require('../middlewares/auth');
+const { isHFS } = require('../middlewares/category');
 
 const maxAge = 3 * 60 * 60 * 1000;
 const limit = 12 * 60 * 60 * 1000;
@@ -14,7 +14,7 @@ const createToken = (email) => {
     return jwt.sign({ email }, 'HFS', { expiresIn: maxAge });
 }
 
-router.post('/create-token', hasHRAccess, isAdminLoggedIn,  async(req, res) => {
+router.post('/create-token', hasHRAccess, isAdminLoggedIn, async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
@@ -23,15 +23,16 @@ router.post('/create-token', hasHRAccess, isAdminLoggedIn,  async(req, res) => {
         const tokens_list = volun.foodTokens;
         const check = tokens_list[tokens_list.length - 1].issueTime - Date.now();
 
-        if(tokens_list.length > 0 &&  check < limit && volun.role == "VOLUNTEER"){
-            return res.status(500).json({ message: `wait for ${(limit-check)/(1000*60*60)} hrs before sending token again`});
+        if (tokens_list.length > 0 && check < limit && volun.role == "VOLUNTEER") {
+            return res.status(500).json({ message: `wait for ${(limit-check)/(1000*60*60)} hrs before sending token again` });
         }
 
         const obj = {
             'issueTime': Date.now(),
             'token': foodToken_jwt,
             'isRedeemed': false,
-            'redeemTime': ""
+            'redeemTime': "",
+            'isSC': false
         }
 
         tokens_list.push(obj);
@@ -46,7 +47,7 @@ router.post('/create-token', hasHRAccess, isAdminLoggedIn,  async(req, res) => {
 });
 
 //access
-router.post('/token-tester', isAdminLoggedIn, hasSuperAdminAccess,  async(req, res) => {
+router.post('/token-tester', isAdminLoggedIn, hasSuperAdminAccess, async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
@@ -58,9 +59,10 @@ router.post('/token-tester', isAdminLoggedIn, hasSuperAdminAccess,  async(req, r
             'issueTime': Date.now(),
             'token': foodToken_jwt,
             'isRedeemed': false,
-            'redeemTime': ""
+            'redeemTime': "",
+            'isSC': true,
         }
-        
+
         tokens_list.push(obj);
         await Volunteer.findOneAndUpdate({ 'email': email }, { 'foodTokens': tokens_list });
         console.log(tokens_list);
@@ -73,7 +75,7 @@ router.post('/token-tester', isAdminLoggedIn, hasSuperAdminAccess,  async(req, r
 });
 
 //add hfs check logged in here
-router.post('/redeem-token',isAdminLoggedIn,  isHFS,  async(req, res) => {
+router.post('/redeem-token', isAdminLoggedIn, isHFS, async(req, res) => {
     try {
         const toBeRedeemed = req.query.token;
         const payload = jwt.verify(toBeRedeemed, 'HFS');

@@ -11,9 +11,12 @@ const token_object = {
     isRedeemed: {
         type: Boolean
     },
-    redeemTime:{
+    redeemTime: {
         type: Date
-    }
+    },
+    isSC: {
+        type: Boolean
+    },
 }
 
 const VolunteerSchema = new mongoose.Schema({
@@ -36,8 +39,6 @@ const VolunteerSchema = new mongoose.Schema({
     foodTokens: [{
         type: token_object
     }]
-},
-    { timestamps: true }
-);
+}, { timestamps: true });
 
 module.exports = Volunteer = mongoose.model('Volunteer', VolunteerSchema);
