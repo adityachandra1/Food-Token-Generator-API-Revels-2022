@@ -3,9 +3,27 @@ import "./css/DashboardContent.css";
 
 function DashboardContent({ USERS }) {
   const [name, setName] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
+
+  const onhandleCheckboxChange = (e, user) => {
+    console.log(e.target.checked);
+    if (e.target.checked) {
+      setSelectedUsers([...selectedUsers, user]);
+    } else {
+      const filtered = selectedUsers.filter(
+        (eachItem) => eachItem.id !== user.id
+      );
+      // setSelectedUsers(filtered);
+
+      // const filtered = selectedUsers.splice(i, 1);
+
+      setSelectedUsers(filtered);
+    }
+    console.log(selectedUsers);
+  };
 
   const filter = (e) => {
     const keyword = e.target.value;
@@ -63,7 +81,13 @@ function DashboardContent({ USERS }) {
             foundUsers.map((user) => (
               <li key={user.id} className="User">
                 <div className="User-id">
-                  <input type="checkbox" id="User-id-checkbox" />
+                  <input
+                    type="checkbox"
+                    id="User-id-checkbox"
+                    onChange={(e, i) => {
+                      onhandleCheckboxChange(e, user);
+                    }}
+                  />
                 </div>
                 <div className="User-name">{user.name}</div>
                 <div className="User-role">{user.role} </div>
