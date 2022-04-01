@@ -1,0 +1,31 @@
+.profile {
+    padding-top: 3.2em;
+    width: 225px;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-detail {
+    display: flex;
+    flex-direction: column;
+    padding-left: 14px;
+}
+
+.profile-user-name {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 28px;
+    color: #fdfdfd;
+}
+
+.profile-designation {
+    margin-top: -10px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 25px;
+    color: #dddddd;
+}

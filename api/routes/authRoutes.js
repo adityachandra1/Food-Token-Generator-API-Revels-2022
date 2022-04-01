@@ -5,8 +5,15 @@ const jwt = require('jsonwebtoken');
 
 router.post('/login', async(req, res) => {
     try {
-        console.log('--------adminloginbackend------------');
-        let { email, password } = req.body;
+
+        console.log(req.body);
+       
+      
+
+        let { email, password } = req.body; 
+        console.log(email);
+        console.log(password);
+        console.log("1");
         let admin = await Admin.findOne({ email }, { email: 1, password: 1 });
         if (!admin)
             return res

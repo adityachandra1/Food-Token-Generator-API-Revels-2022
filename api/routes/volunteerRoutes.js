@@ -21,15 +21,18 @@ router.post("/create-volunteer", isAdminLoggedIn, async(req, res) => {
     }
 });
 
-router.get("/get-volunteers-by-cat", isAdminLoggedIn, async(req, res) => {
-    const categoryName = req.body;
+router.get("/get-volunteers-by-cat", async(req, res) => {
+    const { categoryName } = req.body;
     let volunteers = [];
-    if (categoryName.length != undefined) {
-        volunteers = await Volunteer.find({ category: { category: categoryName } });
+    const cat = await Category.findOne({ 'category': categoryName });
+    if (cat != null) {
+        volunteers = await Volunteer.find({ category: cat["_id"] });
     } else {
         volunteers = await Volunteer.find({});
     }
     res.send(volunteers);
 });
+
+
 
 module.exports = router;
