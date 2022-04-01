@@ -1,6 +1,4 @@
-import { Col } from "antd";
 import React, { useState } from "react";
-import { Container } from "reactstrap";
 import "./css/DashboardContent.css";
 
 function DashboardContent({ USERS }) {
@@ -26,13 +24,13 @@ function DashboardContent({ USERS }) {
     setName(keyword);
   };
   return (
-    <div className="dashboard-part">
-      <div className="pagination">
+    <div className="dashboard-part container d-flex justify-content-center">
+      <div className="pagination d-flex flex-row justify-content-center">
         <div className="dot"></div>
         <div className="dot"></div>
         <div className="dot"></div>
       </div>
-      <div className="categories">
+      <div className="categories d-flex flex-row justify-content-center">
         <a href="/" className="category active-category">
           Organisers
         </a>
@@ -43,10 +41,10 @@ function DashboardContent({ USERS }) {
           Volunteers
         </a>
       </div>
-      <div className="list">
-        <div className="list-header">
+      <div className="list d-flex flex-column justify-content-center align-content-center">
+        <div className="list-header d-flex flex-row justify-content-center">
           <h3 className="list-heading">List of Organisers:</h3>
-          <div className="search-bar">
+          <div className="search-bar d-flex flex-column align-items-center mx-auto">
             <label htmlFor="search-input"></label>
             <input
               type="search"
@@ -60,23 +58,27 @@ function DashboardContent({ USERS }) {
           </div>
           <button className="search-btn">Select all</button>
         </div>
-        <Container className="user-list">
+        <div className="user-box d-flex flex-column justify-content-between">
           {foundUsers && foundUsers.length > 0 ? (
             foundUsers.map((user) => (
               <li key={user.id} className="user">
                 <div className="user-id">
                   <input type="checkbox" id="user-id-checkbox" />
                 </div>
-                <Col className="user-name">{user.name}</Col>
-                <Col className="user-role">{user.role} </Col>
+                <div className="user-name">{user.name}</div>
+                <div className="user-role">{user.role} </div>
               </li>
             ))
           ) : (
             <h3>No results found!</h3>
           )}
-        </Container>
+        </div>
+
         <div className="mini-text">System admin and web development</div>
-        <button className="TokenBtn">Generate Tokens</button>
+
+        <button className="TokenBtn d-flex justify-content-center mx-auto">
+          Generate Tokens
+        </button>
       </div>
     </div>
   );

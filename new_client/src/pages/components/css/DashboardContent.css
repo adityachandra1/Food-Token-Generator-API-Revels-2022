@@ -8,9 +8,6 @@
 
 .pagination {
     margin-top: -20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
 }
 
 .dot {
@@ -23,9 +20,9 @@
 
 .categories {
     margin-top: 4em;
-    display: flex;
+    /* display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: center; */
 }
 
 .category {
@@ -47,14 +44,15 @@
 
 .list-header {
     margin-top: 5em;
-    display: flex;
+    margin-bottom: 1em;
+    /* display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: center; */
 }
 
 .list-heading {
-    width: 10em;
-    margin-right: 4em;
+    /* width: 10em; */
+    /* margin-right: 2em; */
     margin-top: 10px;
     font-family: "Inter";
     font-style: normal;
@@ -65,10 +63,10 @@
 }
 
 .search-bar {
-    margin-right: 2em;
-    display: flex;
+    margin-right: 1em;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
 }
 
 .searchInput {
@@ -100,12 +98,14 @@
     border-radius: 7px;
 }
 
-.user-list {
-    margin-top: 1.5em;
-    display: flex;
+.user-box {
+    margin-top: 1em;
+    /* margin-left: 0em; */
+    /* display: flex;
+    align-self: center;
+    align-content: center;
     justify-content: flex-start;
-    flex-direction: column;
-    width: 50em;
+    flex-direction: column; */
     height: 346px;
     overflow-y: scroll;
     background: linear-gradient( 111.59deg, #353537 3.77%, rgba(196, 196, 196, 0) 127.39%);
@@ -118,7 +118,7 @@
 .user {
     list-style: none;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     padding: 10px;
     z-index: 2;
     color: white;
@@ -135,11 +135,12 @@ input[type="checkbox"] {
     appearance: none;
     font: inherit;
     color: currentColor;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     background: rgba(18, 18, 18, 1);
     color: #fff;
     margin: 0;
+    margin-top: 8px;
 }
 
 input[type="checkbox"]:checked {
@@ -153,6 +154,7 @@ input[type="checkbox"]:checked {
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); */
     color: #fff;
     margin: 0;
+    margin-top: 7px;
 }
 
 .user-name {
@@ -162,7 +164,7 @@ input[type="checkbox"]:checked {
     font-family: "Inter";
     font-style: normal;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 27px;
     color: rgba(207, 205, 205, 1);
 }
@@ -182,7 +184,7 @@ input[type="checkbox"]:checked {
 }
 
 .mini-text {
-    margin-left: -32em;
+    margin-left: 1em;
     margin-top: 10px;
     font-family: "Inter";
     font-style: normal;
@@ -198,7 +200,7 @@ input[type="checkbox"]:checked {
 .TokenBtn {
     margin-top: 2em;
     margin-bottom: 4em;
-    margin-left: 25em;
+    width: 10em;
     background: #868fd3;
     border-radius: 10px;
     font-family: "Inter";
@@ -213,6 +215,8 @@ input[type="checkbox"]:checked {
 
 /* ----------scroll kit----------------- */
 
+
+/* 
  ::-webkit-scrollbar {
     width: 10px;
 }
@@ -227,4 +231,4 @@ input[type="checkbox"]:checked {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: #272727;
-}
+} */

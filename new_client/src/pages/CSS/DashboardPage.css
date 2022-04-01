@@ -13,7 +13,7 @@
 .dashboard-container {
     background: #08080a;
     min-height: 100vh;
-    min-width: 100vw;
+    width: 100vw;
     font-family: "Roboto";
     color: rgba(255, 255, 255, 1);
 }
@@ -24,8 +24,12 @@
 }
 
 .logo {
-    margin-left: -5em;
+    margin-left: 1em;
     margin-bottom: 2em;
+}
+
+.right-part {
+    margin-left: -2em;
 }
 
 .leftCircle {
@@ -44,7 +48,7 @@
     position: absolute;
     width: 300.64px;
     height: 420.23px;
-    left: 78vw;
+    left: 72vw;
     top: 30vh;
     border-radius: 50%;
     background: linear-gradient( 97.61deg, #3542d3 -18.04%, #303e7c 95.17%, #303e7c 188.52%);

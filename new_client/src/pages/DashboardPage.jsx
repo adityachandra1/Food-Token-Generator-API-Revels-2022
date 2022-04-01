@@ -5,7 +5,6 @@ import Sidebar from "./components/Sidebar";
 import ContentHeader from "./components/ContentHeader";
 import ProfileContent from "./components/ProfileContent";
 import DashboardContent from "./components/DashboardContent";
-import { Container, Row, Col } from "reactstrap";
 
 function DashboardPage() {
   const USERS = [
@@ -24,25 +23,23 @@ function DashboardPage() {
   ];
   return (
     <div className="dashboard-container">
-      <Container>
-        <Row>
-          <Col md={2} sm={12}>
-            <div className="left-part">
-              <div className="logo">
-                <img src={logo} alt="LOGO" />
-              </div>
-              <Sidebar />
+      <div className="main-container">
+        <div className="row">
+          <div className="col-12 col-md-2 left-part">
+            <div className="logo">
+              <img src={logo} alt="LOGO" />
             </div>
-          </Col>
-          <Col md={8} sm={6}>
+            <Sidebar />
+          </div>
+          <div className="col-10 col-md-8 mid-part">
             <ContentHeader />
             <DashboardContent USERS={USERS} />
-          </Col>
-          <Col md={2} sm={6}>
+          </div>
+          <div className="col-2 col-md-2 right-part">
             <ProfileContent />
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
       <div className="leftCircle"></div>
       <div className="rightCircle"></div>
     </div>
