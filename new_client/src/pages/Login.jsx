@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import { Form, Input, Button } from "antd";
 import logo from "./images/login/logo.png";
 import wave1 from "./images/login/wave1.svg";
@@ -11,13 +11,8 @@ const Login = (e) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  
-  const onFinish = async (e) => {
-    // e.preventDefault();
-    const json = { email, password };
 
-    console.log("Success:", json);
-  };
+
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
