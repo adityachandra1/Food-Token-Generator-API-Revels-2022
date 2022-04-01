@@ -8,18 +8,18 @@ import DashboardContent from "./components/DashboardContent";
 
 function DashboardPage() {
   const USERS = [
-    { name: "Andy", role: "Core Committee Member" },
-    { name: "Garvit", role: "Core Committee Member" },
-    { name: "Yash", role: "Core Committee Member" },
-    { name: "ajdaijd", role: "Organizer" },
-    { name: "aaaaa", role: "Organizer" },
-    { name: "xxaaa", role: "Organizer" },
-    { name: "Andy", role: "Organizer" },
-    { name: "Garvit", role: "Organizer" },
-    { name: "Yash", role: "Volunteer" },
-    { name: "ajdaijd", role: "Volunteer" },
-    { name: "aaaaa", role: "Volunteer" },
-    { name: "xxaaa", role: "Volunteer" }
+    { id: 0, name: "Andy", role: "Core Committee Member" },
+    { id: 1, name: "Garvit", role: "Core Committee Member" },
+    { id: 2, name: "Yash", role: "Core Committee Member" },
+    { id: 3, name: "ajdaijd", role: "Organizer" },
+    { id: 4, name: "aaaaa", role: "Organizer" },
+    { id: 5, name: "xxaaa", role: "Organizer" },
+    { id: 6, name: "Andy", role: "Organizer" },
+    { id: 7, name: "Garvit", role: "Organizer" },
+    { id: 8, name: "Yash", role: "Volunteer" },
+    { id: 9, name: "ajdaijd", role: "Volunteer" },
+    { id: 10, name: "aaaaa", role: "Volunteer" },
+    { id: 11, name: "xxaaa", role: "Volunteer" },
   ];
   return (
     <div className="dashboard-container">
