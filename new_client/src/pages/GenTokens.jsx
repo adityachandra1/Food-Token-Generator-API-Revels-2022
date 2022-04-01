@@ -1,17 +1,32 @@
 
 
 import "./CSS/GenTokens.css";
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 const axios = require('axios').default;
-
-
 
 
 const GenTokens = () => {
 
 
-
-
+  useEffect(() => {
+   
+    axios.get('http://localhost:8080/get-volunteers-by-cat')
+  .then(function (response) {
+    // handle success
+    
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+  
+  
+  
+  });
 
 
 
