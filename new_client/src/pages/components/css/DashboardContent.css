@@ -128,7 +128,7 @@
     margin-right: 20px;
     position: relative;
     width: fit-content;
-    margin: 0 1rem 0 1 rem;
+    margin: 0 1rem 0 1rem;
 }
 
 input[type="checkbox"] {
@@ -211,24 +211,3 @@ input[type="checkbox"]:checked {
     padding: 5px;
     color: #ffffff;
 }
-
-
-/* ----------scroll kit----------------- */
-
-
-/* 
- ::-webkit-scrollbar {
-    width: 10px;
-}
-
- ::-webkit-scrollbar-track {
-    background-color: #575757;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-}
-
- ::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: #272727;
-} */
