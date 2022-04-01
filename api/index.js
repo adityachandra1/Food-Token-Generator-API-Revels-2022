@@ -12,6 +12,8 @@ const statRoutes = require('./routes/statRoutes');
 const infoRoutes = require('./routes/infoRoutes');
 const authRoutes = require('./routes/authRoutes');
 
+const Role = require('./models/Role.js');
+
 const app = express();
 const PORT = 8080;
 
@@ -20,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.DB_URI || 'mongodb+srv://admin:admin123@cluster0.gqru4.mongodb.net/cnp-portal', {
+mongoose.connect(process.env.DB_URI || 'mongodb+srv://dbuser:dbuser@cluster0.ujfux.mongodb.net/TestingRevels22?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
