@@ -22,6 +22,9 @@ router.post("/create-volunteer", isAdminLoggedIn, async (req, res) => {
 });
 
 router.get("/get-volunteers-by-cat" , async (req, res) => {
+
+    console.log("get volunteer");
+
     const {categoryName} = req.body;
     let volunteers = [];
     const cat = await Category.findOne({ 'category': categoryName });
