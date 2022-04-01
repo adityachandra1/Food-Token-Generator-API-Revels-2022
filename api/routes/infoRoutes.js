@@ -30,8 +30,8 @@ router.get('/get-admin-category', isAdminLoggedIn, async(req, res) => {
     try {
         const user = req.requestAdmin;
         const categoryId = user.role.categoryId;
-        const categoryName = Category.findOne({ category: categoryName });
-        res.json({ "categoryId": categoryId, "categoryName": categoryName });
+        const category = await Category.findOne({ _id: categoryId });
+        res.json({ "categoryId": categoryId, "categoryName": category.category });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.toString() });
