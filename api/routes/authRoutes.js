@@ -53,6 +53,7 @@ router.post('/logout', async(req, res) => {
                 success: true,
                 msg: 'Logged Out Successfully',
             });
+
         } else {
             return res.status(400).send({ success: false, msg: 'Not Logged In' });
         }

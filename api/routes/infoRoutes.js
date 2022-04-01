@@ -26,4 +26,16 @@ router.get('/info-volunteer', isAdminLoggedIn, async(req, res) => {
     }
 });
 
+router.get('/get-admin-category', isAdminLoggedIn, async(req, res) => {
+    try {
+        const user = req.requestAdmin;
+        const categoryId = user.role.categoryId;
+        const categoryName = Category.findOne({ category: categoryName });
+        res.json({ "categoryId": categoryId, "categoryName": categoryName });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.toString() });
+    }
+});
+
 module.exports = router;
