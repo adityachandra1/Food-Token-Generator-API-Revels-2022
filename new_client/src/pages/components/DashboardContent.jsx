@@ -41,10 +41,10 @@ function DashboardContent({ USERS }) {
           Volunteers
         </a>
       </div>
-      <div className="list d-flex flex-column justify-content-center align-content-center">
-        <div className="list-header d-flex flex-row justify-content-center">
+      <div className="list d-flex flex-column justify-content-center align-self-end">
+        <div className="list-header d-flex flex-row">
           <h3 className="list-heading">List of Organisers:</h3>
-          <div className="search-bar d-flex flex-column align-items-center mx-auto">
+          <div className="search-bar d-flex flex-row align-items-center mx-auto">
             <label htmlFor="search-input"></label>
             <input
               type="search"
@@ -55,18 +55,18 @@ function DashboardContent({ USERS }) {
               name="search-input"
               placeholder="Search"
             />
+            <button className="search-btn">Select all</button>
           </div>
-          <button className="search-btn">Select all</button>
         </div>
-        <div className="user-box d-flex flex-column justify-content-between">
+        <div className="users-box d-flex flex-column justify-content-between">
           {foundUsers && foundUsers.length > 0 ? (
             foundUsers.map((user) => (
-              <li key={user.id} className="user">
-                <div className="user-id">
-                  <input type="checkbox" id="user-id-checkbox" />
+              <li key={user.id} className="User">
+                <div className="User-id">
+                  <input type="checkbox" id="User-id-checkbox" />
                 </div>
-                <div className="user-name">{user.name}</div>
-                <div className="user-role">{user.role} </div>
+                <div className="User-name">{user.name}</div>
+                <div className="User-role">{user.role} </div>
               </li>
             ))
           ) : (

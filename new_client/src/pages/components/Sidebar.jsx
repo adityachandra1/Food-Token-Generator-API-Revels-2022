@@ -4,11 +4,12 @@ import "./css/Sidebar.css";
 function Sidebar() {
   return (
     <div className="sidebar-container">
-      <a className="btn active" href="/">
+      <a className="sidebar-btn active-sidebar-btn" href="/">
         Dashboard
       </a>
       <br />
-      <a className="btn" href="/">
+      <br />
+      <a className="sidebar-btn" href="/">
         Log Out
       </a>
     </div>
