@@ -5,6 +5,8 @@ import React, { useState,useEffect } from "react";
 const axios = require('axios').default;
 
 
+
+
 const GenTokens = () => {
 
 
@@ -67,6 +69,10 @@ const GenTokens = () => {
     setName(keyword);
   };
 
+  const genTokens = () => {
+   
+  };
+
   return (
    
      
@@ -122,7 +128,7 @@ const GenTokens = () => {
       
       </div>
       </div>
-      <button className="send-button">
+      <button className="send-button" onClick={genTokens}>
       SEND
     </button>
 

@@ -12,22 +12,12 @@ const Login = (e) => {
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
-  
-  const onFinish = async (e) => {
-    // e.preventDefault();
-    const json = { email, password };
 
-    console.log("Success:", json);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   const postPass = (errorInfo) => {
-    console.log("-----------");
+    //console.log("-----------");
     errorInfo.preventDefault();
-    console.log("--------");
+    //console.log("--------");
     console.log(password);
     axios.post('http://localhost:8080/login', {
      email:`${email}`,
@@ -37,8 +27,10 @@ const Login = (e) => {
       console.log("1");
       console.log(response);
       setIsLoggedIn(true);
-      console.log("---------------------------------");
-      console.log(isLoggedIn);
+     // console.log("---------------------------------");
+      //console.log(response);
+      //sessionStorage.setItem("jwt", token)
+
     })
     .catch(function (error) {
       console.log("2");
