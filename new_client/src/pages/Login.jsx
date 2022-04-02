@@ -16,7 +16,7 @@ const Login = (e) => {
 
   const postPass = (e) => {
     //console.log("-----------");
-    e.preventDefault();
+   
     //console.log("--------");
     console.log(password);
     axios.post('http://localhost:8080/login', {
