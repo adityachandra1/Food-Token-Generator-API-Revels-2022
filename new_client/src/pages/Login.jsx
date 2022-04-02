@@ -7,6 +7,8 @@ import wave2 from "./images/login/wave2.svg";
 import "./CSS/login.css";
 const axios = require("axios").default;
 
+var x;
+
 const Login = (e) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +17,9 @@ const Login = (e) => {
 
 
   const postPass = (e) => {
+    e.preventDefault();
     //console.log("-----------");
-   
+    const jwt = JSON.parse(localStorage.getItem("jwt"));
     //console.log("--------");
     console.log(password);
     axios.post('http://localhost:8080/login', {
@@ -29,8 +32,10 @@ const Login = (e) => {
       setIsLoggedIn(true);
      // console.log("---------------------------------");
       //console.log(response);
-      //sessionStorage.setItem("jwt", token)
-
+      sessionStorage.setItem("jwt", response.data.token);
+      x=response.data.token;
+      console.log(x);
+     
     })
     .catch(function (error) {
       console.log("2");
@@ -45,7 +50,7 @@ const Login = (e) => {
       <div className="login-container">
         <img src={logo} alt="LOGO" />
 
-        <form className="login-form-container">
+        <form className="login-form-container" onSubmit={postPass}>
           <div className="form-block">
             <label className="login-form-label">Email </label>
             <br />
@@ -75,7 +80,7 @@ const Login = (e) => {
             />
           </div>
 
-          <button className="login-btn" onClick={(e) => postPass(e)}>
+          <button className="login-btn" type="submit">
             Log in to your account
           </button>
         </form>
