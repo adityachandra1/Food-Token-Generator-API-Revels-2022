@@ -8,28 +8,28 @@ import DashboardContent from "./components/DashboardContent";
 const axios = require("axios").default;
 
 function DashboardPage() {
-  const [USERS, setUSERS] = useState([]);
-  const func = async () => {
-    await axios
-      .get("http://localhost:8080/get-volunteers-by-cat", {
-        categoryName: "SYSTEM ADMIN",
-      })
-      .then(function (response) {
-        // handle success
+  // const [USERS, setUSERS] = useState([]);
+  // const func = async () => {
+  //   await axios
+  //     .get("http://localhost:8080/get-volunteers-by-cat", {
+  //       categoryName: "SYSTEM ADMIN",
+  //     })
+  //     .then(function (response) {
+  //       // handle success
 
-        console.log(response.data);
-        setUSERS(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
-  };
+  //       console.log(response.data);
+  //       setUSERS(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       // handle error
+  //       console.log(error);
+  //     })
+  //     .then(function () {
+  //       // always executed
+  //     });
+  // };
   useEffect(() => {
-    func();
+    // func();
   }, []);
   // const USERS = [
   //   { id: 0, name: "Andy", role: "Core Committee Member" },
@@ -47,7 +47,7 @@ function DashboardPage() {
   // ];
   return (
     <div className="dashboard-container">
-      {console.log("users", USERS)}
+      {/* {console.log("users", USERS)} */}
       <div className="main-container">
         <div className="row">
           <div className="col-12 col-md-2 left-part">
@@ -58,7 +58,7 @@ function DashboardPage() {
           </div>
           <div className="col-10 col-md-8 mid-part">
             <ContentHeader />
-            <DashboardContent USERS={USERS} />
+            <DashboardContent />
           </div>
           <div className="col-2 col-md-2 right-part">
             <ProfileContent />

@@ -1,14 +1,37 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
+const axios = require("axios").default;
 
-function DashboardContent({ USERS }) {
+function DashboardContent() {
   const [name, setName] = useState("");
+  const [USERS, setUSERS] = useState([]);
+
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
+  const func = async () => {
+    await axios
+      .get("http://localhost:8080/get-volunteers-by-cat", {
+        categoryName: "SYSTEM ADMIN",
+      })
+      .then(function (response) {
+        // handle success
+
+        console.log(response.data);
+        setUSERS(response.data);
+        setFoundUsers(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+  };
   React.useEffect(() => {
-    setFoundUsers(USERS);
+    func();
   }, []);
 
   const onhandleCheckboxChange = (e, user) => {
@@ -47,6 +70,8 @@ function DashboardContent({ USERS }) {
   };
   return (
     <div className="dashboard-part container d-flex justify-content-center">
+      {console.log("USERSSSS", USERS)}
+      {console.log("foundUsers", foundUsers)}
       <div className="pagination d-flex flex-row justify-content-center">
         <div className="dot"></div>
         <div className="dot"></div>
@@ -81,22 +106,24 @@ function DashboardContent({ USERS }) {
           </div>
         </div>
         <div className="users-box d-flex flex-column justify-content-between">
-          {foundUsers && foundUsers.length > 0 ? (
-            foundUsers.map((user) => (
-              <li key={user._id} className="User">
-                <div className="User-id">
-                  <input
-                    type="checkbox"
-                    id="User-id-checkbox"
-                    onChange={(e, i) => {
-                      onhandleCheckboxChange(e, user);
-                    }}
-                  />
-                </div>
-                <div className="User-name">{user.name}</div>
-                <div className="User-role">{user.role} </div>
-              </li>
-            ))
+          {foundUsers.length > 0 ? (
+            foundUsers.map((user) => {
+              return (
+                <li key={user._id} className="User">
+                  <div className="User-id">
+                    <input
+                      type="checkbox"
+                      id="User-id-checkbox"
+                      onChange={(e, i) => {
+                        onhandleCheckboxChange(e, user);
+                      }}
+                    />
+                  </div>
+                  <div className="User-name">{user.name}</div>
+                  <div className="User-role">{user.role} </div>
+                </li>
+              );
+            })
           ) : (
             <h3>No results found!</h3>
           )}
