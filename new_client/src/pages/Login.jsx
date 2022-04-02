@@ -5,7 +5,7 @@ import logo from "./images/login/logo.png";
 import wave1 from "./images/login/wave1.svg";
 import wave2 from "./images/login/wave2.svg";
 import "./CSS/login.css";
-const axios = require('axios').default;
+const axios = require("axios").default;
 
 const Login = (e) => {
   const [email, setEmail] = useState("");
@@ -14,9 +14,9 @@ const Login = (e) => {
   
 
 
-  const postPass = (errorInfo) => {
+  const postPass = (e) => {
     //console.log("-----------");
-    errorInfo.preventDefault();
+    e.preventDefault();
     //console.log("--------");
     console.log(password);
     axios.post('http://localhost:8080/login', {
@@ -38,10 +38,10 @@ const Login = (e) => {
     });
   };
 
-
-  return (
-    isLoggedIn ? <Dashboard /> :
-    (<div className="login-main-container">
+  return isLoggedIn ? (
+    <Dashboard />
+  ) : (
+    <div className="login-main-container">
       <div className="login-container">
         <img src={logo} alt="LOGO" />
 
@@ -74,16 +74,17 @@ const Login = (e) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-         
-            <button className="login-btn" onClick={(e) => postPass(e)}>Log in to your account</button>
-         
+
+          <button className="login-btn" onClick={(e) => postPass(e)}>
+            Log in to your account
+          </button>
         </form>
       </div>
-      <div className="waves">
+      {/* <div className="waves">
         <img src={wave1} alt="" className="wave-svg1" />
         <img src={wave2} alt="" className="wave-svg2" />
-      </div>
-    </div>)
+      </div> */}
+    </div>
   );
 };
 
