@@ -7,6 +7,9 @@ function DashboardContent({ USERS }) {
 
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
+  React.useEffect(() => {
+    setFoundUsers(USERS);
+  }, []);
 
   const onhandleCheckboxChange = (e, user) => {
     console.log(e.target.checked);
@@ -14,7 +17,7 @@ function DashboardContent({ USERS }) {
       setSelectedUsers([...selectedUsers, user]);
     } else {
       const filtered = selectedUsers.filter(
-        (eachItem) => eachItem.id !== user.id
+        (eachItem) => eachItem._id !== user._id
       );
       // setSelectedUsers(filtered);
 
@@ -33,6 +36,7 @@ function DashboardContent({ USERS }) {
         return user.name.toLowerCase().startsWith(keyword.toLowerCase());
         // Use the toLowerCase() method to make it case-insensitive
       });
+      console.log(results);
       setFoundUsers(results);
     } else {
       setFoundUsers(USERS);
@@ -79,7 +83,7 @@ function DashboardContent({ USERS }) {
         <div className="users-box d-flex flex-column justify-content-between">
           {foundUsers && foundUsers.length > 0 ? (
             foundUsers.map((user) => (
-              <li key={user.id} className="User">
+              <li key={user._id} className="User">
                 <div className="User-id">
                   <input
                     type="checkbox"
