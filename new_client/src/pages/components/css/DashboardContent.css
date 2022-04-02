@@ -153,14 +153,22 @@ input[type="checkbox"]:checked {
     appearance: none;
     font: inherit;
     color: currentColor;
-    width: 16px;
-    height: 16px;
-    background: rgba(134, 143, 211, 1);
-    /* transform-origin: bottom left;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); */
+    width: 20px;
+    height: 20px;
+    background: linear-gradient( 111.59deg, #353537 3.77%, rgba(196, 196, 196, 0) 127.39%);
     color: #fff;
     margin: 0;
     margin-top: 7px;
+    margin-left: 3px;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .User-name {
