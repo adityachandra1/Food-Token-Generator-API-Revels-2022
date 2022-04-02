@@ -9,6 +9,7 @@ const axios = require('axios').default;
 
 const GenTokens = () => {
 
+  const [login, isLoggedin] = useState(false);
 
   useEffect(() => {
    
@@ -29,6 +30,30 @@ const GenTokens = () => {
   
   
   });
+
+  useEffect(async () => {
+    const jwt = JSON.parse(localStorage.getItem("jwt"));
+
+    await axios
+      .get("http://localhost:8080/isUserLoggedIn", {
+        headers: {
+          "x-access-token": jwt,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data === "allow_access") {
+          isLoggedin(true);
+        } else {
+          isLoggedin(false);
+        }
+        // props.history.push("/")
+      })
+      .catch((err) => {
+        console.log(err.message);
+        isLoggedin(false);
+      });
+  }, []);
 
 
 

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express();
 const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
+const { isAdminLoggedIn } = require('../middlewares/auth');
 
 router.post('/login', async(req, res) => {
     try {
@@ -61,6 +62,10 @@ router.post('/logout', async(req, res) => {
             .status(500)
             .json({ success: false, msg: 'Internal Server Error' });
     }
+});
+
+router.get('/check-logged-in', isAdminLoggedIn, async (req, res) => {
+    res.send("allow_access");
 });
 
 module.exports = router;

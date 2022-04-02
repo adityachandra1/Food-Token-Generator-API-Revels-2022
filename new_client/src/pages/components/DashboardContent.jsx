@@ -5,7 +5,7 @@ const axios = require("axios").default;
 function DashboardContent() {
   const [name, setName] = useState("");
   const [USERS, setUSERS] = useState([]);
-
+const [login,isLoggedIn]=useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   // the search result
@@ -33,6 +33,9 @@ function DashboardContent() {
   React.useEffect(() => {
     func();
   }, []);
+
+  
+  
 
   const onhandleCheckboxChange = (e, user) => {
     console.log(e.target.checked);
