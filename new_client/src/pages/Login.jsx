@@ -13,10 +13,6 @@ const Login = (e) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
- 
-
-
 
   const postPass = (e) => {
     e.preventDefault();
@@ -24,6 +20,7 @@ const Login = (e) => {
     const jwt = JSON.parse(localStorage.getItem("jwt"));
     //console.log("--------");
     console.log(password);
+<<<<<<< HEAD
     axios.post('http://localhost:8080/login', {
      email:`${email}`,
      password:`${password}`
@@ -43,11 +40,30 @@ const Login = (e) => {
       console.log("2");
       console.log(error);
     });
+=======
+    axios
+      .post("http://localhost:8080/login", {
+        email: `${email}`,
+        password: `${password}`,
+      })
+      .then(function (response) {
+        console.log("1");
+        console.log(response);
+        setIsLoggedIn(true);
+        // console.log("---------------------------------");
+        //console.log(response);
+        sessionStorage.setItem("jwt", response.data.token);
+        x = response.data.token;
+        console.log(x);
+      })
+      .catch(function (error) {
+        console.log("2");
+        console.log(error);
+      });
+>>>>>>> c8ef27a885f23626a1a1ce9a23263546d65a631c
   };
 
-  return isLoggedIn ? (
-    <Dashboard />
-  ) : (
+  return (
     <div className="login-main-container">
       <div className="login-container">
         <img src={logo} alt="LOGO" />
