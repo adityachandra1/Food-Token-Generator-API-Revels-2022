@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import "./CSS/DashboardPage.css";
+import Login from './Login'
 import logo from "./assets/Vector.svg";
 import Sidebar from "./components/Sidebar";
 import ContentHeader from "./components/ContentHeader";
@@ -8,6 +9,7 @@ import DashboardContent from "./components/DashboardContent";
 const axios = require("axios").default;
 
 function DashboardPage() {
+  const [login,isLoggedin]=useState(false);
   // const [USERS, setUSERS] = useState([]);
   // const func = async () => {
   //   await axios
@@ -27,10 +29,32 @@ function DashboardPage() {
   //     .then(function () {
   //       // always executed
   //     });
+
   // };
-  useEffect(() => {
-    // func();
+  useEffect(async () => {
+    const jwt = JSON.parse(localStorage.getItem("jwt"));
+
+    await axios
+      .get("http://localhost:8080/isUserLoggedIn", {
+        headers: {
+          "x-access-token": jwt,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data === "allow_access") {
+          isLoggedin(true);
+        } else {
+          isLoggedin(false);
+        }
+        // props.history.push("/")
+      })
+      .catch((err) => {
+        console.log(err.message);
+        isLoggedin(false);
+      });
   }, []);
+
   // const USERS = [
   //   { id: 0, name: "Andy", role: "Core Committee Member" },
   //   { id: 1, name: "Garvit", role: "Core Committee Member" },
@@ -45,7 +69,7 @@ function DashboardPage() {
   //   { id: 10, name: "aaaaa", role: "Volunteer" },
   //   { id: 11, name: "xxaaa", role: "Volunteer" },
   // ];
-  return (
+  return login ? (
     <div className="dashboard-container">
       {/* {console.log("users", USERS)} */}
       <div className="main-container">
@@ -68,6 +92,8 @@ function DashboardPage() {
       <div className="leftCircle"></div>
       <div className="rightCircle"></div>
     </div>
+  ) : (
+   <Login />
   );
 }
 export default DashboardPage;
