@@ -34,8 +34,8 @@ const Login = (e) => {
       setIsLoggedIn(true);
      // console.log("---------------------------------");
       //console.log(response);
-      sessionStorage.setItem("jwt", response.data.token);
-      x=response.data.token;
+      sessionStorage.setItem("jwt", response.data.data.token);
+      x=response.data.data.token;
       console.log(x);
      
     })

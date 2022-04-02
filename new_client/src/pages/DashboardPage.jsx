@@ -9,6 +9,34 @@ import DashboardContent from "./components/DashboardContent";
 const axios = require("axios").default;
 
 function DashboardPage() {
+
+
+  async function asyncCall() {
+    const jwt = JSON.parse(sessionStorage.getItem("jwt"));
+      console.log(jwt);
+       await axios
+        .get("http://localhost:8080/check-logged-in", {
+          headers: {
+            authorization: jwt,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data === "allow_access") {
+            isLoggedin(true);
+          } else {
+            isLoggedin(false);
+          }
+          // props.history.push("/")
+        })
+        .catch((err) => {
+          console.log(err.message);
+          isLoggedin(false);
+        });
+    
+  }
+
+
   const [login,isLoggedin]=useState(false);
   // const [USERS, setUSERS] = useState([]);
   // const func = async () => {
@@ -31,28 +59,8 @@ function DashboardPage() {
   //     });
 
   // };
-  useEffect(async () => {
-    const jwt = JSON.parse(localStorage.getItem("jwt"));
-
-    await axios
-      .get("http://localhost:8080/isUserLoggedIn", {
-        headers: {
-          "x-access-token": jwt,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data === "allow_access") {
-          isLoggedin(true);
-        } else {
-          isLoggedin(false);
-        }
-        // props.history.push("/")
-      })
-      .catch((err) => {
-        console.log(err.message);
-        isLoggedin(false);
-      });
+  useEffect(() => {
+    asyncCall()
   }, []);
 
   // const USERS = [
@@ -95,5 +103,5 @@ function DashboardPage() {
   ) : (
    <Login />
   );
-}
+  }
 export default DashboardPage;

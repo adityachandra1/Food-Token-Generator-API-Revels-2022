@@ -96,7 +96,10 @@ const isVerifiedForRevels = async (req, res, next) => {
 
 const isAdminLoggedIn = async (req, res, next) => {
   try {
-    console.log('is Admin login middleware');
+    console.log('is Admin login middleware');   
+   console.log('token', req.headers);
+
+
     const token = req.headers['authorization'];
     console.log(token);
     if (typeof token !== 'undefined') {
