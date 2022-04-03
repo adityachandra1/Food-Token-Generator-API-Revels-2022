@@ -16,32 +16,34 @@ const createToken = (email) => {
     return jwt.sign({ email }, 'HFS', { expiresIn: maxAge });
 }
 
-router.post('/create-token', hasHRAccess, isAdminLoggedIn, async(req, res) => {
+router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
     try {
-        const { email } = req.body;
-        const foodToken_jwt = createToken(email);
-        let link = 'https://www.google.com/search?q=' + foodToken_jwt;
-        const volun = await Volunteer.findOne({ 'email': email });
-        const tokens_list = volun.foodTokens;
-        const check = tokens_list[tokens_list.length - 1].issueTime - Date.now();
+        let { emails } = req.body;
+        emails = emails.split(",");
+        for (const email of emails) {
+            const foodToken_jwt = createToken(email);
+            let link = 'https://www.google.com/search?q=' + foodToken_jwt;
+            const volun = await Volunteer.findOne({ 'email': email });
+            const tokens_list = volun.foodTokens;
 
-        if (tokens_list.length > 0 && check < limit && volun.role == "VOLUNTEER") {
-            return res.status(500).json({ message: `wait for ${(limit - check) / (1000 * 60 * 60)} hrs before sending token again` });
+            if (tokens_list.length > 0 && tokens_list[tokens_list.length - 1].issueTime - Date.now() < limit && volun.role == "VOLUNTEER") {
+                continue;
+            }
+
+            const obj = {
+                'issueTime': Date.now(),
+                'token': foodToken_jwt,
+                'isRedeemed': false,
+                'redeemTime': "",
+                'isSC': false
+            }
+
+            tokens_list.push(obj);
+            await Volunteer.findOneAndUpdate({ 'email': email }, { 'foodTokens': tokens_list });
+            console.log(tokens_list);
+            console.log(volun);
         }
-
-        const obj = {
-            'issueTime': Date.now(),
-            'token': foodToken_jwt,
-            'isRedeemed': false,
-            'redeemTime': "",
-            'isSC': false
-        }
-
-        tokens_list.push(obj);
-        await Volunteer.findOneAndUpdate({ 'email': email }, { 'foodTokens': tokens_list });
-        console.log(tokens_list);
-        console.log(volun);
-        return res.status(200).json({ message: "Success", data: volun });
+        return res.status(200).json({ message: "Success" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.toString() });

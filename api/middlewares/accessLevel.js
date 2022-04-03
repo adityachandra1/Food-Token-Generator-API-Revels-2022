@@ -6,7 +6,7 @@
 
 const User = require('../models/User');
 
-const hasReadAccess = async (req, res, next) => {
+const hasReadAccess = async(req, res, next) => {
     try {
         let user = req.requestAdmin;
         if (user.role.accessLevel >= 1) next();
@@ -23,7 +23,7 @@ const hasReadAccess = async (req, res, next) => {
     }
 };
 
-const hasReadWriteAccess = async (req, res, next) => {
+const hasReadWriteAccess = async(req, res, next) => {
     try {
         let user = req.requestAdmin;
         if (user.role.accessLevel >= 2) next();
@@ -40,7 +40,7 @@ const hasReadWriteAccess = async (req, res, next) => {
     }
 };
 
-const hasCategorySuperAdminAccess = async (req, res, next) => {
+const hasCategorySuperAdminAccess = async(req, res, next) => {
     try {
         let user = req.requestAdmin;
         if (user.role.accessLevel >= 3) next();
@@ -57,7 +57,7 @@ const hasCategorySuperAdminAccess = async (req, res, next) => {
     }
 };
 
-const hasSuperAdminAccess = async (req, res, next) => {
+const hasSuperAdminAccess = async(req, res, next) => {
     try {
         let user = req.requestAdmin;
         if (user.role.accessLevel >= 4) next();
@@ -74,7 +74,7 @@ const hasSuperAdminAccess = async (req, res, next) => {
     }
 };
 
-const hasHRAccess = async (req, res, next) => {
+const hasHRAccess = async(req, res, next) => {
     try {
         let user = req.requestAdmin;
         if (user.role.accessLevel == -1) next();
