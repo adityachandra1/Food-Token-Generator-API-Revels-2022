@@ -35,7 +35,7 @@ function DashboardPage() {
     const jwt = JSON.parse(localStorage.getItem("jwt"));
 
     await axios
-      .get("http://localhost:8080/isUserLoggedIn", {
+      .get("http://localhost:8080/check-logged-in", {
         headers: {
           "x-access-token": jwt,
         },
