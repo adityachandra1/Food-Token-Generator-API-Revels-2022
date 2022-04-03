@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 // import { Form, Input, Button } from "antd";
 import Dashboard from "../pages/DashboardPage";
 import logo from "./images/login/logo.png";
@@ -12,7 +12,38 @@ var x;
 const Login = (e) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [login, isLoggedin] = useState(false);
+
+  async function asyncCall() {
+    const jwt = sessionStorage.getItem("currentUser");
+      console.log(jwt);
+       await axios
+        .get("http://localhost:8080/check-logged-in", {
+          headers: {
+            authorization: jwt,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data === "allow_access") {
+            isLoggedin(true);
+          } else {
+            isLoggedin(false);
+          }
+          // props.history.push("/")
+        })
+        .catch((err) => {
+          console.log(err.message);
+          isLoggedin(false);
+        });
+    
+  }
+
+
+  useEffect(() => {
+    asyncCall()
+  }, []);
+
 
   const postPass = (e) => {
     e.preventDefault();
@@ -28,23 +59,25 @@ const Login = (e) => {
       .then(function (response) {
         console.log("1");
         console.log(response);
-        setIsLoggedIn(true);
+        isLoggedin(true);
         // console.log("---------------------------------");
         //console.log(response);
         
         x = response.data.data.token;
         sessionStorage.setItem("currentUser", JSON.stringify(x));
         console.log(x);
+        isLoggedin(true);
       })
       .catch(function (error) {
         console.log("2");
         console.log(error);
+        isLoggedin(false);
       });
   };
 
-  if(isLoggedIn)
+  if(login)
   {
-    return <Dashboard />;
+    return <Dashboard />
   }
   else
   {
