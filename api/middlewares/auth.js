@@ -97,10 +97,11 @@ const isVerifiedForRevels = async (req, res, next) => {
 const isAdminLoggedIn = async (req, res, next) => {
   try {
     console.log('is Admin login middleware');   
-   console.log('token', req.headers);
+   
+    
+const token = JSON.parse(req.headers['authorization']);
 
-
-    const token = req.headers['authorization'];
+    
     console.log(token);
     if (typeof token !== 'undefined') {
       let payload = await jwt.verify(token, process.env.JWT_SECRET);
