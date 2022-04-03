@@ -12,7 +12,7 @@ function DashboardPage() {
 
 
   async function asyncCall() {
-    const jwt = localStorage.getItem("currentUser");
+    const jwt = sessionStorage.getItem("currentUser");
       console.log(jwt);
        await axios
         .get("http://localhost:8080/check-logged-in", {
@@ -77,6 +77,8 @@ function DashboardPage() {
   //   { id: 10, name: "aaaaa", role: "Volunteer" },
   //   { id: 11, name: "xxaaa", role: "Volunteer" },
   // ];
+  if(login)
+  {
   return (
     <div className="dashboard-container">
       {/* {console.log("users", USERS)} */}
@@ -102,4 +104,10 @@ function DashboardPage() {
     </div>
   );
   }
+
+else
+{
+  return <Login />;
+}
+}
 export default DashboardPage;

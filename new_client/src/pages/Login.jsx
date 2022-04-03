@@ -33,7 +33,7 @@ const Login = (e) => {
         //console.log(response);
         
         x = response.data.data.token;
-        localStorage.setItem("currentUser", JSON.stringify(x));
+        sessionStorage.setItem("currentUser", JSON.stringify(x));
         console.log(x);
       })
       .catch(function (error) {
@@ -42,6 +42,12 @@ const Login = (e) => {
       });
   };
 
+  if(isLoggedIn)
+  {
+    return <Dashboard />;
+  }
+  else
+  {
   return (
     <div className="login-main-container">
       <div className="login-container">
@@ -88,6 +94,7 @@ const Login = (e) => {
       </div> */}
     </div>
   );
+    }
 };
 
 export default Login;
