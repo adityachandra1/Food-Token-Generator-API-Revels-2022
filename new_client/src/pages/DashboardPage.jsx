@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import "./CSS/DashboardPage.css";
-import Login from './Login'
+import Login from "./Login";
 import logo from "./assets/Vector.svg";
 import Sidebar from "./components/Sidebar";
 import ContentHeader from "./components/ContentHeader";
@@ -9,7 +9,35 @@ import DashboardContent from "./components/DashboardContent";
 const axios = require("axios").default;
 
 function DashboardPage() {
-  const [login,isLoggedin]=useState(false);
+
+
+  async function asyncCall() {
+    const jwt = localStorage.getItem("currentUser");
+      console.log(jwt);
+       await axios
+        .get("http://localhost:8080/check-logged-in", {
+          headers: {
+            authorization: jwt,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data === "allow_access") {
+            isLoggedin(true);
+          } else {
+            isLoggedin(false);
+          }
+          // props.history.push("/")
+        })
+        .catch((err) => {
+          console.log(err.message);
+          isLoggedin(false);
+        });
+    
+  }
+
+
+  const [login, isLoggedin] = useState(false);
   // const [USERS, setUSERS] = useState([]);
   // const func = async () => {
   //   await axios
@@ -31,28 +59,8 @@ function DashboardPage() {
   //     });
 
   // };
-  useEffect(async () => {
-    const jwt = JSON.parse(localStorage.getItem("jwt"));
-
-    await axios
-      .get("http://localhost:8080/check-logged-in", {
-        headers: {
-          "x-access-token": jwt,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data === "allow_access") {
-          isLoggedin(true);
-        } else {
-          isLoggedin(false);
-        }
-        // props.history.push("/")
-      })
-      .catch((err) => {
-        console.log(err.message);
-        isLoggedin(false);
-      });
+  useEffect(() => {
+    asyncCall()
   }, []);
 
   // const USERS = [
@@ -69,7 +77,7 @@ function DashboardPage() {
   //   { id: 10, name: "aaaaa", role: "Volunteer" },
   //   { id: 11, name: "xxaaa", role: "Volunteer" },
   // ];
-  return login ? (
+  return (
     <div className="dashboard-container">
       {/* {console.log("users", USERS)} */}
       <div className="main-container">
@@ -92,8 +100,6 @@ function DashboardPage() {
       <div className="leftCircle"></div>
       <div className="rightCircle"></div>
     </div>
-  ) : (
-   <Login />
   );
-}
+  }
 export default DashboardPage;

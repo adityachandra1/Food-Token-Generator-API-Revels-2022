@@ -5,11 +5,46 @@ const axios = require("axios").default;
 function DashboardContent() {
   const [name, setName] = useState("");
   const [USERS, setUSERS] = useState([]);
-const [login,isLoggedIn]=useState("");
+  const [_checked, setChecked] = useState(false);
+
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
+
+  // const handleSelectAll = () => {
+  //
+  //   for (let i = 0; i < checkbox.length; i++) {
+  //     checkbox[i].checked = true;
+  //   }
+  //   checkbox.map((item) => {
+  //     // if(item.checked === false) {
+  //     // item.checked = true;
+  //     console.log(item);
+  //   });
+  //   console.log("check", checkbox[0]);
+  // };
+  const handleSelectAll = () => {
+    console.log(_checked);
+    setSelectedUsers(USERS);
+    const checkbox = document.querySelectorAll("#User-id-checkbox");
+    if (_checked) {
+      for (let i = 0; i < checkbox.length; i++) {
+        console.log("1", checkbox[i].checked);
+        checkbox[i].checked = false;
+      }
+      setChecked(false);
+      setSelectedUsers(USERS);
+    } else {
+      for (let i = 0; i < checkbox.length; i++) {
+        console.log("2", checkbox[i].checked);
+        checkbox[i].checked = true;
+      }
+
+      setChecked(true);
+      setSelectedUsers([]);
+    }
+  };
   const func = async () => {
     await axios
       .get("http://localhost:8080/get-volunteers-by-cat", {
@@ -33,9 +68,6 @@ const [login,isLoggedIn]=useState("");
   React.useEffect(() => {
     func();
   }, []);
-
-  
-  
 
   const onhandleCheckboxChange = (e, user) => {
     console.log(e.target.checked);
@@ -71,10 +103,11 @@ const [login,isLoggedIn]=useState("");
 
     setName(keyword);
   };
+
+  const onGenToken = () => {};
+
   return (
     <div className="dashboard-part container d-flex justify-content-center">
-      {console.log("USERSSSS", USERS)}
-      {console.log("foundUsers", foundUsers)}
       <div className="pagination d-flex flex-row justify-content-center">
         <div className="dot"></div>
         <div className="dot"></div>
@@ -105,7 +138,9 @@ const [login,isLoggedIn]=useState("");
               name="search-input"
               placeholder="Search"
             />
-            <button className="search-btn">Select all</button>
+            <button className="search-btn" onClick={handleSelectAll}>
+              Select all
+            </button>
           </div>
         </div>
         <div className="users-box d-flex flex-column justify-content-between">
@@ -134,7 +169,10 @@ const [login,isLoggedIn]=useState("");
 
         <div className="mini-text">System admin and web development</div>
 
-        <button className="TokenBtn d-flex justify-content-center mx-auto">
+        <button
+          className="TokenBtn d-flex justify-content-center mx-auto"
+          onClick={onGenToken}
+        >
           Generate Tokens
         </button>
       </div>
