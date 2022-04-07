@@ -7,6 +7,7 @@ const { isAdminLoggedIn } = require('../middlewares/auth');
 router.post('/login', async(req, res) => {
     try {
         let { email, password } = req.body;
+        console.log(email);
         let admin = await Admin.findOne({ email }, { email: 1, password: 1 });
         if (!admin)
             return res
