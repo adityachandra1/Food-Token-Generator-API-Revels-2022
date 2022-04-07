@@ -18,8 +18,9 @@ const createToken = (email) => {
 
 router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
     try {
-        let { emails } = req.body;
-        emails = emails.split(",");
+        let email_list  = req.body;
+        const emails = email_list.map(element => element.email);
+        console.log(emails);
         for (const email of emails) {
             const foodToken_jwt = createToken(email);
             let link = 'https://www.google.com/search?q=' + foodToken_jwt;
@@ -51,7 +52,7 @@ router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
 });
 
 //access
-router.post('/token-tester', /*isAdminLoggedIn, hasSuperAdminAccess,*/ async(req, res) => {
+router.post('/token-tester', isAdminLoggedIn, hasSuperAdminAccess, async(req, res) => {
     try {
         const { email } = req.body;
         const foodToken_jwt = createToken(email);
