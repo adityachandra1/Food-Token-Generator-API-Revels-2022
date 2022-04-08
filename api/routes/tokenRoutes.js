@@ -26,7 +26,7 @@ router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
             let link = 'https://www.google.com/search?q=' + foodToken_jwt;
             const volun = await Volunteer.findOne({ 'email': email });
             const tokens_list = volun.foodTokens;
-
+            console.log(volun);
             if (tokens_list.length > 0 && tokens_list[tokens_list.length - 1].issueTime - Date.now() < limit && volun.role == "VOLUNTEER") {
                 continue;
             }
@@ -39,6 +39,10 @@ router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
                 'isSC': false
             }
 
+            let img = await QRCode.toDataURL(link);
+            let body = '<h2>Your Token</h2></br> <img src="' + img + '">';
+            let em = await mailer.sendEmailNotif(email, "FOOD TOKEN", body, "FOOD TOKEN");
+            console.log(img);
             tokens_list.push(obj);
             await Volunteer.findOneAndUpdate({ 'email': email }, { 'foodTokens': tokens_list });
             console.log(tokens_list);
