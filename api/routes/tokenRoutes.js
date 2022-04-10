@@ -16,10 +16,13 @@ const createToken = (email) => {
     return jwt.sign({ email }, 'HFS', { expiresIn: maxAge });
 }
 
-router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
+router.post('/create-token', isAdminLoggedIn, async(req, res) => {
     try {
         let email_list  = req.body;
-        const emails = email_list.map(element => element.email);
+       email_list = email_list.products.map(function (obj) {
+            return obj.id;
+          });
+      //  const emails = email_list.products.map(element => element.email);
         console.log(emails);
         for (const email of emails) {
             const foodToken_jwt = createToken(email);
