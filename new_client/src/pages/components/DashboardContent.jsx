@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
-const axios = require("axios").default;
-
+import axios from "axios";
 function DashboardContent() {
   const [name, setName] = useState("");
   const [USERS, setUSERS] = useState([]);
@@ -11,35 +10,26 @@ function DashboardContent() {
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
 
-  
-const gen=async () =>{
-  const jwt = sessionStorage.getItem("currentUser");
-  console.log(jwt);
-  await axios
-      .post("http://localhost:8080/create-token",{} , {
-        headers: {
-          authorization: jwt,
-        },
-    
-      })
-      .then(function (response) {
-        // handle success
+  const gen = async () => {
+    console.log("users", selectedUsers);
 
-        console.log(response.data);
-     
-        setFoundUsers(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
-
-
-}
-
+    const jwt = sessionStorage.getItem("currentUser");
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/create-token",
+        { email: selectedUsers },
+        {
+          headers: {
+            authorization: jwt,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Success", res);
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
 
   const func = async () => {
     await axios
@@ -61,6 +51,9 @@ const gen=async () =>{
         // always executed
       });
   };
+
+  console.log("HIHI");
+
   React.useEffect(() => {
     func();
   }, []);
@@ -162,7 +155,10 @@ const gen=async () =>{
 
         <div className="mini-text">System admin and web development</div>
 
-        <button className="TokenBtn d-flex justify-content-center mx-auto" onClick={gen}>
+        <button
+          className="TokenBtn d-flex justify-content-center mx-auto"
+          onClick={gen}
+        >
           Generate Tokens
         </button>
       </div>

@@ -6,36 +6,31 @@ import Sidebar from "./components/Sidebar";
 import ContentHeader from "./components/ContentHeader";
 import ProfileContent from "./components/ProfileContent";
 import DashboardContent from "./components/DashboardContent";
-const axios = require("axios").default;
-
+import axios from "axios";
 function DashboardPage() {
-
-
   async function asyncCall() {
     const jwt = sessionStorage.getItem("currentUser");
-      console.log(jwt);
-       await axios
-        .get("http://localhost:8080/check-logged-in", {
-          headers: {
-            authorization: jwt,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          if (res.data === "allow_access") {
-            isLoggedin(true);
-          } else {
-            isLoggedin(false);
-          }
-          // props.history.push("/")
-        })
-        .catch((err) => {
-          console.log(err.message);
+    console.log(jwt);
+    await axios
+      .get("http://localhost:8080/check-logged-in", {
+        headers: {
+          authorization: jwt,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data === "allow_access") {
+          isLoggedin(true);
+        } else {
           isLoggedin(false);
-        });
-    
+        }
+        // props.history.push("/")
+      })
+      .catch((err) => {
+        console.log(err.message);
+        isLoggedin(false);
+      });
   }
-
 
   const [login, isLoggedin] = useState(false);
   // const [USERS, setUSERS] = useState([]);
@@ -60,7 +55,7 @@ function DashboardPage() {
 
   // };
   useEffect(() => {
-    asyncCall()
+    asyncCall();
   }, []);
 
   // const USERS = [
@@ -77,37 +72,33 @@ function DashboardPage() {
   //   { id: 10, name: "aaaaa", role: "Volunteer" },
   //   { id: 11, name: "xxaaa", role: "Volunteer" },
   // ];
-  if(login)
-  {
-  return (
-    <div className="dashboard-container">
-      {/* {console.log("users", USERS)} */}
-      <div className="main-container">
-        <div className="row">
-          <div className="col-12 col-md-2 left-part">
-            <div className="logo">
-              <img src={logo} alt="LOGO" />
+  if (login) {
+    return (
+      <div className="dashboard-container">
+        {/* {console.log("users", USERS)} */}
+        <div className="main-container">
+          <div className="row">
+            <div className="col-12 col-md-2 left-part">
+              <div className="logo">
+                <img src={logo} alt="LOGO" />
+              </div>
+              <Sidebar />
             </div>
-            <Sidebar />
-          </div>
-          <div className="col-10 col-md-8 mid-part">
-            <ContentHeader />
-            <DashboardContent />
-          </div>
-          <div className="col-2 col-md-2 right-part">
-            <ProfileContent />
+            <div className="col-10 col-md-8 mid-part">
+              <ContentHeader />
+              <DashboardContent />
+            </div>
+            <div className="col-2 col-md-2 right-part">
+              <ProfileContent />
+            </div>
           </div>
         </div>
+        <div className="leftCircle"></div>
+        <div className="rightCircle"></div>
       </div>
-      <div className="leftCircle"></div>
-      <div className="rightCircle"></div>
-    </div>
-  );
+    );
+  } else {
+    return <Login />;
   }
-
-else
-{
-  return <Login />;
-}
 }
 export default DashboardPage;
