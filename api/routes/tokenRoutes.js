@@ -18,9 +18,10 @@ const createToken = (email) => {
 
 router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
     try {
-        let email_list  = req.body;
+        let email_list = req.body;
         const emails = email_list.map(element => element.email);
         console.log(emails);
+        const error_emails = [];
         for (const email of emails) {
             const foodToken_jwt = createToken(email);
             let link = 'https://www.google.com/search?q=' + foodToken_jwt;
@@ -28,6 +29,7 @@ router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
             const tokens_list = volun.foodTokens;
             console.log(volun);
             if (tokens_list.length > 0 && tokens_list[tokens_list.length - 1].issueTime - Date.now() < limit && volun.role == "VOLUNTEER") {
+                error_emails.push(volun.name);
                 continue;
             }
 
@@ -47,8 +49,9 @@ router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
             await Volunteer.findOneAndUpdate({ 'email': email }, { 'foodTokens': tokens_list });
             console.log(tokens_list);
             console.log(volun);
+            console.log(error_emails);
         }
-        return res.status(200).json({ message: "Success" });
+        return res.status(200).json({ message: "Success", timed_out_emails: error_emails });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.toString() });
