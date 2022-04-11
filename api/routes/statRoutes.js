@@ -12,7 +12,7 @@ const { isHFS } = require("../middlewares/category");
 
 const tokenAge = 3 * 60 * 60 * 1000;
 
-router.get("/getstats", isAdminLoggedIn, async (req, res) => {
+router.get("/getstats", async (req, res) => {
   const categories = await Category.find({});
   let stats = {};
   for (const cat of categories) {
