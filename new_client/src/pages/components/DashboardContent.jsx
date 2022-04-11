@@ -6,41 +6,41 @@ const axios = require("axios").default;
 const { Option } = Select;
 
 function DashboardContent() {
-  const [name, setName] = useState("");
   const [USERS, setUSERS] = useState([]);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [_checked, setChecked] = useState(false); // the search result
 
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
 
   const gen = async () => {
+    const finalUsers = [];
+
+    selectedUsers.forEach(async (id) => {
+      finalUsers.push(foundUsers.find((user) => user._id === id));
+    });
+
     const jwt = sessionStorage.getItem("currentUser");
     console.log(jwt);
     await axios
       .post(
         "http://localhost:8080/create-token",
-        {},
+        {
+          email: finalUsers,
+        },
         {
           headers: {
-            authorization: jwt,
+            authorization: JSON.parse(jwt),
           },
         }
       )
       .then(function (response) {
         // handle success
-
         console.log(response.data);
-
-        setFoundUsers(response.data);
       })
       .catch(function (error) {
         // handle error
         console.log(error);
-      })
-      .then(function () {
-        // always executed
       });
   };
 
@@ -67,24 +67,6 @@ function DashboardContent() {
   React.useEffect(() => {
     func();
   }, []);
-
-  const filter = (e) => {
-    const keyword = e.target.value;
-
-    if (keyword !== "") {
-      const results = USERS.filter((user) => {
-        return user.name.toLowerCase().startsWith(keyword.toLowerCase());
-        // Use the toLowerCase() method to make it case-insensitive
-      });
-      console.log(results);
-      setFoundUsers(results);
-    } else {
-      setFoundUsers(USERS);
-      // If the text field is empty, show all users
-    }
-
-    setName(keyword);
-  };
 
   return (
     <div className="dashboard-part container d-flex justify-content-center">
@@ -137,7 +119,16 @@ function DashboardContent() {
           // footer={<div>Footer</div>}
           bordered
           dataSource={selectedUsers}
-          renderItem={(item) => <List.Item>{item}</List.Item>}
+          renderItem={(item) => (
+            <List.Item>
+              {
+                // name of user using the id
+                foundUsers.find((user) => user._id === item).name +
+                  ": ID is  " +
+                  item
+              }
+            </List.Item>
+          )}
         />
         {/* {foundUsers.length > 0 ? (
             foundUsers.map((user) => {
