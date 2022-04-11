@@ -76,7 +76,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           </div>
 
           <button className="login-btn" type="submit">
-            Log in to your account
+            Log in
           </button>
         </form>
       </div>

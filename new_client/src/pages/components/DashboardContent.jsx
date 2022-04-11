@@ -1,35 +1,46 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
-import axios from "axios";
+const axios = require("axios").default;
+
 function DashboardContent() {
   const [name, setName] = useState("");
   const [USERS, setUSERS] = useState([]);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [_checked, setChecked] = useState(false); // the search result
 
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
 
-  const gen = async () => {
-    console.log("users", selectedUsers);
+  
+const gen=async () =>{
+  const jwt = sessionStorage.getItem("currentUser");
+  console.log(jwt);
+  await axios
+      .post("http://localhost:8080/create-token",{} , {
+        headers: {
+          authorization: jwt,
+        },
+    
+      })
+      .then(function (response) {
+        // handle success
 
-    const jwt = sessionStorage.getItem("currentUser");
-    try {
-      const res = await axios.post(
-        "http://localhost:8080/create-token",
-        { email: selectedUsers },
-        {
-          headers: {
-            authorization: jwt,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Success", res);
-    } catch (err) {
-      console.log("error", err);
-    }
-  };
+        console.log(response.data);
+     
+        setFoundUsers(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+
+
+}
+
 
   const func = async () => {
     await axios
@@ -51,9 +62,6 @@ function DashboardContent() {
         // always executed
       });
   };
-
-  console.log("HIHI");
-
   React.useEffect(() => {
     func();
   }, []);
@@ -72,7 +80,7 @@ function DashboardContent() {
 
       setSelectedUsers(filtered);
     }
-    console.log(selectedUsers);
+    console.log("selected bitch", selectedUsers);
   };
 
   const filter = (e) => {
@@ -92,10 +100,31 @@ function DashboardContent() {
 
     setName(keyword);
   };
+  const handleSelectAll = () => {
+    console.log(_checked);
+    setSelectedUsers(USERS);
+    const checkbox = document.querySelectorAll("#User-id-checkbox");
+    if (_checked) {
+      for (let i = 0; i < checkbox.length; i++) {
+        console.log("1", checkbox[i].checked);
+        checkbox[i].checked = false;
+      }
+      setChecked(false);
+      setSelectedUsers(USERS);
+    } else {
+      for (let i = 0; i < checkbox.length; i++) {
+        console.log("2", checkbox[i].checked);
+        checkbox[i].checked = true;
+      }
+
+      setChecked(true);
+      setSelectedUsers([]);
+    }
+
+    console.log("selected", selectedUsers);
+  };
   return (
     <div className="dashboard-part container d-flex justify-content-center">
-      {console.log("USERSSSS", USERS)}
-      {console.log("foundUsers", foundUsers)}
       <div className="pagination d-flex flex-row justify-content-center">
         <div className="dot"></div>
         <div className="dot"></div>
@@ -126,7 +155,7 @@ function DashboardContent() {
               name="search-input"
               placeholder="Search"
             />
-            <button className="search-btn">Select all</button>
+            <button className="search-btn" onClick={handleSelectAll}>Select all</button>
           </div>
         </div>
         <div className="users-box d-flex flex-column justify-content-between">
@@ -155,10 +184,7 @@ function DashboardContent() {
 
         <div className="mini-text">System admin and web development</div>
 
-        <button
-          className="TokenBtn d-flex justify-content-center mx-auto"
-          onClick={gen}
-        >
+        <button className="TokenBtn d-flex justify-content-center mx-auto" onClick={gen}>
           Generate Tokens
         </button>
       </div>
