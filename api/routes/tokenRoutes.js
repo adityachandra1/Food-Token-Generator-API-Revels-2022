@@ -42,7 +42,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
 
     for (const email of emails) {
       const foodToken_jwt = createToken(email);
-      let link = "https://www.google.com/search?q=" + foodToken_jwt;
+      let link = `${process.env.BASE_URL}/api/redeem-token?token=` + foodToken_jwt;
       const volun = await Volunteer.findOne({ email: email });
       const tokens_list = volun.foodTokens;
       console.log(volun);
