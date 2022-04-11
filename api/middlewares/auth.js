@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const Admin = require("../models/Admin");
+const Category = require("../models/categoryModel");
+
 var jwt = require("jsonwebtoken");
 
 const isUserLoggedIn = async (req, res, next) => {
@@ -112,7 +114,14 @@ const isAdminLoggedIn = async (req, res, next) => {
           _id: payload.admin_Id,
           token,
         }).populate("role");
-        console.log("here ", admin);
+
+        // populate the user with the category
+        const categoryId = admin.role.categoryId;
+        const categoryData = await Category.findById(categoryId);
+        const categoryName = categoryData.category;
+
+        req.categoryName = categoryName;
+
         if (admin) {
           req.requestAdmin = admin;
           next();
