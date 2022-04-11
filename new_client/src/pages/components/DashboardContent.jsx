@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
-import { Select, List, Typography, Divider, Button } from "antd";
+import { Select, List, Popconfirm, message, Button, Row, Col } from "antd";
 const axios = require("axios").default;
 
 const { Option } = Select;
 
 function DashboardContent() {
   const [USERS, setUSERS] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   // the search result
@@ -22,6 +22,7 @@ function DashboardContent() {
 
     const jwt = sessionStorage.getItem("currentUser");
     console.log(jwt);
+    setIsLoading(true);
     await axios
       .post(
         "http://localhost:8080/create-token",
@@ -36,10 +37,13 @@ function DashboardContent() {
       )
       .then(function (response) {
         // handle success
+        setIsLoading(false);
         console.log(response.data);
       })
       .catch(function (error) {
         // handle error
+        setIsLoading(false);
+
         console.log(error);
       });
   };
@@ -69,13 +73,8 @@ function DashboardContent() {
   }, []);
 
   return (
-    <div className="dashboard-part container d-flex justify-content-center">
-      <div className="pagination d-flex flex-row justify-content-center">
-        <div className="dot"></div>
-        <div className="dot"></div>
-        <div className="dot"></div>
-      </div>
-      <div className="categories d-flex flex-row justify-content-center">
+    <div>
+      {/* <div className="categories d-flex flex-row justify-content-center">
         <a href="/" className="category active-category">
           Organisers
         </a>
@@ -85,62 +84,100 @@ function DashboardContent() {
         <a href="/" className="category">
           Volunteers
         </a>
-      </div>
-      <div className="list d-flex flex-column justify-content-center align-self-end my-5">
-        <h3>Select from the list of organizers</h3>
-        <Button
-          type="primary"
-          onClick={() => {
-            // add all ids in foundUsers to selectedUsers
-            setSelectedUsers(foundUsers.map((user) => user._id));
-          }}
-        >
-          Select All
-        </Button>
-        <Select
-          showSearch
-          allowClear
-          mode="multiple"
-          placeholder="Search to Select"
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-          filterSort={(optionA, optionB) =>
-            optionA.children
-              .toLowerCase()
-              .localeCompare(optionB.children.toLowerCase())
-          }
-          // store selected users in setSelectedUsers
-          onChange={(value) => {
-            setSelectedUsers(value);
-          }}
-        >
-          {console.log("Selected", selectedUsers)}
-          {foundUsers.map((user) => (
-            <Option key={user._id} value={user._id}>
-              {user.name}
-            </Option>
-          ))}
-        </Select>
-        <List
-          size="small"
-          header={<div>Selected users</div>}
-          // footer={<div>Footer</div>}
-          bordered
-          dataSource={selectedUsers}
-          renderItem={(item) => (
-            <List.Item>
-              {
-                // name of user using the id
-                foundUsers.find((user) => user._id === item).name +
-                  ": ID is  " +
-                  item
-              }
-            </List.Item>
-          )}
-        />
-        {/* {foundUsers.length > 0 ? (
+      </div> */}
+      <h3
+        style={{
+          marginTop: "1rem",
+        }}
+        className="subheader"
+      >
+        Select from the list of organizers
+      </h3>
+      <Row>
+        <Col span={24}>
+          <Button
+            style={{
+              width: "100%",
+              margin: "1rem 0",
+            }}
+            type="primary"
+            onClick={() => {
+              // add all ids in foundUsers to selectedUsers
+              setSelectedUsers(foundUsers.map((user) => user._id));
+              // clear the select
+            }}
+          >
+            Select All
+          </Button>
+        </Col>
+        <Col span={24}>
+          <Button
+            style={{
+              width: "100%",
+              margin: "1rem 0",
+            }}
+            type="primary"
+            onClick={() => {
+              // add all ids in foundUsers to selectedUsers
+              setSelectedUsers([]);
+            }}
+          >
+            Remove All
+          </Button>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <Select
+            style={{
+              width: "100%",
+              margin: "1rem 0",
+            }}
+            showSearch
+            allowClear
+            mode="multiple"
+            placeholder="Search to Select"
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+            filterSort={(optionA, optionB) =>
+              optionA.children
+                .toLowerCase()
+                .localeCompare(optionB.children.toLowerCase())
+            }
+            // store selected users in setSelectedUsers
+            onChange={(value) => {
+              setSelectedUsers(value);
+            }}
+          >
+            {foundUsers.map((user) => (
+              <Option key={user._id} value={user._id}>
+                {user.name}
+              </Option>
+            ))}
+          </Select>
+        </Col>
+      </Row>
+      <List
+        size="small"
+        header={<div>Selected users</div>}
+        // footer={<div>Footer</div>}
+        bordered
+        dataSource={selectedUsers}
+        renderItem={(item) => (
+          <List.Item>
+            {
+              // name of user using the id
+              foundUsers.find((user) => user._id === item).name +
+                ": ID is  " +
+                item
+            }
+          </List.Item>
+        )}
+      />
+      {/* {foundUsers.length > 0 ? (
             foundUsers.map((user) => {
               return (
                 <li key={user._id} className="User">
@@ -162,15 +199,29 @@ function DashboardContent() {
             <h3>No results found!</h3>
           )} */}
 
-        <div className="mini-text">System admin and web development</div>
-
-        <button
-          className="TokenBtn d-flex justify-content-center mx-auto"
-          onClick={gen}
+      <Popconfirm
+        title="Are you sure you want to create tokens for these users?"
+        onConfirm={() => {
+          gen();
+        }}
+        onCancel={() => {
+          setIsLoading(false);
+        }}
+        okText="Yes"
+        cancelText="No"
+      >
+        <Button
+          type="danger"
+          style={{
+            width: "100%",
+            margin: "1rem 0",
+          }}
+          loading={isLoading}
         >
           Generate Tokens
-        </button>
-      </div>
+        </Button>
+      </Popconfirm>
+      <div className="mini-text">System admin and web development</div>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import ProfileContent from "./components/ProfileContent";
 import DashboardContent from "./components/DashboardContent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Col, Row } from "antd";
 function DashboardPage({ isLoggedIn }) {
   const navigate = useNavigate();
 
@@ -18,26 +19,29 @@ function DashboardPage({ isLoggedIn }) {
   }, []);
   return (
     <div className="dashboard-container">
+      <ContentHeader />
+
       {/* {console.log("users", USERS)} */}
       <div className="main-container">
-        <div className="row">
-          <div className="col-12 col-md-2 left-part">
+        <Row>
+          <Col xs={24}>
             <div className="logo">
               <img src={logo} alt="LOGO" />
             </div>
             <Sidebar />
-          </div>
-          <div className="col-10 col-md-8 mid-part">
-            <ContentHeader />
+          </Col>
+          <Col
+            xs={24}
+            style={{
+              padding: "0 1rem",
+            }}
+          >
             <DashboardContent />
-          </div>
-          <div className="col-2 col-md-2 right-part">
-            <ProfileContent />
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
-      <div className="leftCircle"></div>
-      <div className="rightCircle"></div>
+      {/* <div className="leftCircle"></div>
+      <div className="rightCircle"></div> */}
     </div>
   );
 }
