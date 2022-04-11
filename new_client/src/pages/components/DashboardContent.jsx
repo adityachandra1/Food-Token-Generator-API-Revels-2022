@@ -105,7 +105,7 @@ function DashboardContent() {
         </a>
       </div>
       <div className="list d-flex flex-column justify-content-center align-self-end my-5">
-        <h3>Select from the list of organizers</h3>
+        <h3 className="list-heading m-auto mb-2">Select from the list of organizers</h3>
         <Select
           showSearch
           mode="multiple"
