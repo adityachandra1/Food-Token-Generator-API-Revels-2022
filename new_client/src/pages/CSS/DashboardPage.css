@@ -24,8 +24,8 @@
 }
 
 .logo {
-  margin-left: 1em;
-  margin-bottom: 2em;
+  margin: 3rem auto;
+  text-align: center;
 }
 
 .right-part {
