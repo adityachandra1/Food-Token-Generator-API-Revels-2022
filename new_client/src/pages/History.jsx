@@ -33,7 +33,9 @@ const History = (isLoggedIn) => {
 
   return (
     <div className="history-container">
-      <Sidebar />
+      <div className="history-sidebar">
+        <Sidebar />
+      </div>
       <div className="table-holder">
         <table className="fl-table">
           <tr>
