@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
-import { Select } from "antd";
+import { Select, List, Typography, Divider } from "antd";
 const axios = require("axios").default;
 
 const { Option } = Select;
@@ -104,10 +104,8 @@ function DashboardContent() {
           Volunteers
         </a>
       </div>
-      <div className="list d-flex flex-column justify-content-center align-self-end">
-        <div className="list-header d-flex flex-row">
-          <h3 className="list-heading">List of Organisers:</h3>
-        </div>
+      <div className="list d-flex flex-column justify-content-center align-self-end my-5">
+        <h3>Select from the list of organizers</h3>
         <Select
           showSearch
           mode="multiple"
@@ -121,13 +119,26 @@ function DashboardContent() {
               .toLowerCase()
               .localeCompare(optionB.children.toLowerCase())
           }
+          // store selected users in setSelectedUsers
+          onChange={(value) => {
+            setSelectedUsers(value);
+          }}
         >
+          {console.log("Selected", selectedUsers)}
           {foundUsers.map((user) => (
             <Option key={user._id} value={user._id}>
               {user.name}
             </Option>
           ))}
         </Select>
+        <List
+          size="small"
+          header={<div>Selected users</div>}
+          // footer={<div>Footer</div>}
+          bordered
+          dataSource={selectedUsers}
+          renderItem={(item) => <List.Item>{item}</List.Item>}
+        />
         {/* {foundUsers.length > 0 ? (
             foundUsers.map((user) => {
               return (

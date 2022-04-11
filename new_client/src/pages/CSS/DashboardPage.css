@@ -66,3 +66,16 @@
   filter: blur(90.473px);
   transform: rotate(-171.18deg);
 }
+
+.ant-list-item {
+  background-color: #fff;
+}
+
+.ant-list-header,
+.ant-list-bordered.ant-list-sm .ant-list-header {
+  background-color: #fafafa;
+}
+
+.ant-list-empty-text {
+  background-color: #fff;
+}
