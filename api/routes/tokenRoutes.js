@@ -10,24 +10,41 @@ const { hasSuperAdminAccess, hasHRAccess } = require('../middlewares/accessLevel
 const { isAdminLoggedIn } = require('../middlewares/auth');
 const { isHFS } = require('../middlewares/category');
 const mailer = require('../middlewares/ses');
+
 const maxAge = 3 * 60 * 60 * 1000;
 const limit = 12 * 60 * 60 * 1000;
+
 const createToken = (email) => {
     return jwt.sign({ email }, 'HFS', { expiresIn: maxAge });
 }
 
-router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
+router.get('/get-eligible-volunteers', async (req, res) =>{
+    const { categoryName } = req.body;
+    let volunteers = [];
+    const cat = await Category.findOne({ 'category': categoryName });
+    if (cat != null) {
+        volunteers = await Volunteer.find({ category: cat["_id"] });
+    } else {
+        volunteers = await Volunteer.find({});
+    }
+    res.send(volunteers);
+});
+
+router.post('/create-token', /*isAdminLoggedIn, hasHRAccess,*/ async(req, res) => {
     try {
         let email_list  = req.body;
         const emails = email_list.map(element => element.email);
         console.log(emails);
+        let error_list = new Array();
+
         for (const email of emails) {
             const foodToken_jwt = createToken(email);
             let link = 'https://www.google.com/search?q=' + foodToken_jwt;
             const volun = await Volunteer.findOne({ 'email': email });
             const tokens_list = volun.foodTokens;
             console.log(volun);
-            if (tokens_list.length > 0 && tokens_list[tokens_list.length - 1].issueTime - Date.now() < limit && volun.role == "VOLUNTEER") {
+            if (tokens_list.length > 0 && Date.now() - tokens_list[tokens_list.length - 1].issueTime < limit && volun.role == "VOLUNTEER") {
+                error_list.push(volun.email);
                 continue;
             }
 
@@ -48,7 +65,7 @@ router.post('/create-token', isAdminLoggedIn, hasHRAccess, async(req, res) => {
             console.log(tokens_list);
             console.log(volun);
         }
-        return res.status(200).json({ message: "Success" });
+        return res.status(200).json({ message: "Success" , "error_list": error_list});
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.toString() });
