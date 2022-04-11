@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
+import { Select, List, Typography, Divider, Button } from "antd";
 const axios = require("axios").default;
 
+const { Option } = Select;
+
 function DashboardContent() {
-  const [name, setName] = useState("");
   const [USERS, setUSERS] = useState([]);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -11,35 +13,36 @@ function DashboardContent() {
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
 
-  
-const gen=async () =>{
-  const jwt = sessionStorage.getItem("currentUser");
-  console.log(jwt);
-  await axios
-      .post("http://localhost:8080/create-token",{} , {
-        headers: {
-          authorization: jwt,
+  const gen = async () => {
+    const finalUsers = [];
+
+    selectedUsers.forEach(async (id) => {
+      finalUsers.push(foundUsers.find((user) => user._id === id));
+    });
+
+    const jwt = sessionStorage.getItem("currentUser");
+    console.log(jwt);
+    await axios
+      .post(
+        "http://localhost:8080/create-token",
+        {
+          email: finalUsers,
         },
-    
-      })
+        {
+          headers: {
+            authorization: JSON.parse(jwt),
+          },
+        }
+      )
       .then(function (response) {
         // handle success
-
         console.log(response.data);
-     
-        setFoundUsers(response.data);
       })
       .catch(function (error) {
         // handle error
         console.log(error);
-      })
-      .then(function () {
-        // always executed
       });
-
-
-}
-
+  };
 
   const func = async () => {
     await axios
@@ -65,44 +68,8 @@ const gen=async () =>{
     func();
   }, []);
 
-  const onhandleCheckboxChange = (e, user) => {
-    console.log(e.target.checked);
-    if (e.target.checked) {
-      setSelectedUsers([...selectedUsers, user]);
-    } else {
-      const filtered = selectedUsers.filter(
-        (eachItem) => eachItem._id !== user._id
-      );
-      // setSelectedUsers(filtered);
-
-      // const filtered = selectedUsers.splice(i, 1);
-
-      setSelectedUsers(filtered);
-    }
-    console.log(selectedUsers);
-  };
-
-  const filter = (e) => {
-    const keyword = e.target.value;
-
-    if (keyword !== "") {
-      const results = USERS.filter((user) => {
-        return user.name.toLowerCase().startsWith(keyword.toLowerCase());
-        // Use the toLowerCase() method to make it case-insensitive
-      });
-      console.log(results);
-      setFoundUsers(results);
-    } else {
-      setFoundUsers(USERS);
-      // If the text field is empty, show all users
-    }
-
-    setName(keyword);
-  };
   return (
     <div className="dashboard-part container d-flex justify-content-center">
-      {console.log("USERSSSS", USERS)}
-      {console.log("foundUsers", foundUsers)}
       <div className="pagination d-flex flex-row justify-content-center">
         <div className="dot"></div>
         <div className="dot"></div>
@@ -119,25 +86,61 @@ const gen=async () =>{
           Volunteers
         </a>
       </div>
-      <div className="list d-flex flex-column justify-content-center align-self-end">
-        <div className="list-header d-flex flex-row">
-          <h3 className="list-heading">List of Organisers:</h3>
-          <div className="search-bar d-flex flex-row align-items-center mx-auto">
-            <label htmlFor="search-input"></label>
-            <input
-              type="search"
-              className="searchInput"
-              value={name}
-              onChange={filter}
-              id="search-input"
-              name="search-input"
-              placeholder="Search"
-            />
-            <button className="search-btn">Select all</button>
-          </div>
-        </div>
-        <div className="users-box d-flex flex-column justify-content-between">
-          {foundUsers.length > 0 ? (
+      <div className="list d-flex flex-column justify-content-center align-self-end my-5">
+        <h3>Select from the list of organizers</h3>
+        <Button
+          type="primary"
+          onClick={() => {
+            // add all ids in foundUsers to selectedUsers
+            setSelectedUsers(foundUsers.map((user) => user._id));
+          }}
+        >
+          Select All
+        </Button>
+        <Select
+          showSearch
+          allowClear
+          mode="multiple"
+          placeholder="Search to Select"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+          filterSort={(optionA, optionB) =>
+            optionA.children
+              .toLowerCase()
+              .localeCompare(optionB.children.toLowerCase())
+          }
+          // store selected users in setSelectedUsers
+          onChange={(value) => {
+            setSelectedUsers(value);
+          }}
+        >
+          {console.log("Selected", selectedUsers)}
+          {foundUsers.map((user) => (
+            <Option key={user._id} value={user._id}>
+              {user.name}
+            </Option>
+          ))}
+        </Select>
+        <List
+          size="small"
+          header={<div>Selected users</div>}
+          // footer={<div>Footer</div>}
+          bordered
+          dataSource={selectedUsers}
+          renderItem={(item) => (
+            <List.Item>
+              {
+                // name of user using the id
+                foundUsers.find((user) => user._id === item).name +
+                  ": ID is  " +
+                  item
+              }
+            </List.Item>
+          )}
+        />
+        {/* {foundUsers.length > 0 ? (
             foundUsers.map((user) => {
               return (
                 <li key={user._id} className="User">
@@ -157,12 +160,14 @@ const gen=async () =>{
             })
           ) : (
             <h3>No results found!</h3>
-          )}
-        </div>
+          )} */}
 
         <div className="mini-text">System admin and web development</div>
 
-        <button className="TokenBtn d-flex justify-content-center mx-auto" onClick={gen}>
+        <button
+          className="TokenBtn d-flex justify-content-center mx-auto"
+          onClick={gen}
+        >
           Generate Tokens
         </button>
       </div>

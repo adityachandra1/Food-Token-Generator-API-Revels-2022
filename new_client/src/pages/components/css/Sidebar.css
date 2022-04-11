@@ -3,23 +3,32 @@
 }
 
 .sidebar-btn {
+    margin-bottom: 10px;
     width: 12.97em;
     border-radius: 16px;
     padding: 0.45em 3.125em;
     text-decoration: none;
-    color: rgba(255, 255, 255, 1);
     font-family: "Inter";
     font-size: 1.125em;
     line-height: 1.68em;
     font-weight: 400;
     border: transparent;
+    color: #000;
 }
 
 .sidebar-btn:hover {
     text-decoration: none;
-    color: #ffffff;
+    color: #000;
+    transform: scale(1.1);
 }
 
 .active-sidebar-btn {
+    color: rgba(255, 255, 255, 1);
     background: linear-gradient( 97.24deg, #1f8ebe -0.43%, #440495 58.09%, #440495 102.73%, rgba(33, 182, 230, 0.628826) 146.25%);
+}
+
+.active-sidebar-btn:hover {
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+    transform: scale(1.1);
 }
