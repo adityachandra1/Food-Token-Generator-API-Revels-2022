@@ -65,8 +65,13 @@ router.post('/logout', async(req, res) => {
     }
 });
 
-router.get('/check-logged-in', isAdminLoggedIn, async (req, res) => {
-    res.send("allow_access");
+router.get('/check-logged-in', isAdminLoggedIn, async(req, res) => {
+    try {
+        res.send("allow_access");
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.toString() });
+    }
 });
 
 module.exports = router;

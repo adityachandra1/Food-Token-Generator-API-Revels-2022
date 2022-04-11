@@ -22,15 +22,20 @@ router.post("/create-volunteer", isAdminLoggedIn, async(req, res) => {
 });
 
 router.get("/get-volunteers-by-cat", async(req, res) => {
-    const { categoryName } = req.body;
-    let volunteers = [];
-    const cat = await Category.findOne({ 'category': categoryName });
-    if (cat != null) {
-        volunteers = await Volunteer.find({ category: cat["_id"] });
-    } else {
-        volunteers = await Volunteer.find({});
+    try {
+        const { categoryName } = req.body;
+        let volunteers = [];
+        const cat = await Category.findOne({ 'category': categoryName });
+        if (cat != null) {
+            volunteers = await Volunteer.find({ category: cat["_id"] });
+        } else {
+            volunteers = await Volunteer.find({});
+        }
+        res.send(volunteers);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.toString() });
     }
-    res.send(volunteers);
 });
 
 
