@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Sidebar.css";
+import ProfileContent from "./ProfileContent";
 
 function Sidebar() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Sidebar() {
       >
         History
       </button>
+      <ProfileContent />
     </div>
   );
 }

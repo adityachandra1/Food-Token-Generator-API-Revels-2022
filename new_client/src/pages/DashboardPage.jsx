@@ -38,13 +38,10 @@ function DashboardPage({ isLoggedIn }) {
           >
             <DashboardContent />
           </Col>
-          <Col xs={24}>
-            <ProfileContent />
-          </Col>
         </Row>
       </div>
-      <div className="leftCircle"></div>
-      <div className="rightCircle"></div>
+      {/* <div className="leftCircle"></div>
+      <div className="rightCircle"></div> */}
     </div>
   );
 }

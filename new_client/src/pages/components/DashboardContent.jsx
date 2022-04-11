@@ -85,7 +85,14 @@ function DashboardContent() {
           Volunteers
         </a>
       </div> */}
-      <h3>Select from the list of organizers</h3>
+      <h3
+        style={{
+          marginTop: "1rem",
+        }}
+        className="subheader"
+      >
+        Select from the list of organizers
+      </h3>
       <Row>
         <Col span={24}>
           <Button
