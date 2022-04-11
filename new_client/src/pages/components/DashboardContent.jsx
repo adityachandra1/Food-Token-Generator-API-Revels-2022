@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
-import { Select, List, Typography, Divider } from "antd";
+import { Select, List, Typography, Divider, Button } from "antd";
 const axios = require("axios").default;
 
 const { Option } = Select;
@@ -88,8 +88,18 @@ function DashboardContent() {
       </div>
       <div className="list d-flex flex-column justify-content-center align-self-end my-5">
         <h3>Select from the list of organizers</h3>
+        <Button
+          type="primary"
+          onClick={() => {
+            // add all ids in foundUsers to selectedUsers
+            setSelectedUsers(foundUsers.map((user) => user._id));
+          }}
+        >
+          Select All
+        </Button>
         <Select
           showSearch
+          allowClear
           mode="multiple"
           placeholder="Search to Select"
           optionFilterProp="children"
