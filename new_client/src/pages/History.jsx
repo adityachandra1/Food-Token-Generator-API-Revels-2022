@@ -4,6 +4,7 @@ import "./CSS/History.css";
 import { useEffect } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Col, Row } from "antd";
 
 const History = (isLoggedIn) => {
   const navigate = useNavigate();
@@ -32,76 +33,11 @@ const History = (isLoggedIn) => {
   }, []);
 
   return (
-    <div className="history-container">
-      <div className="history-sidebar">
+    <Row className="history-container">
+      <Col span={24}>
         <Sidebar />
-      </div>
-      <div className="table-holder">
-        <table className="fl-table">
-          <tr>
-            <th>Name</th>
-            <th>category</th>
-            <th>department</th>
-          </tr>
-
-          <tbody>
-            <tr>
-              <td>Chintan</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-            <tr>
-              <td>Chintan</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-            <tr>
-              <td>Chintan</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-            <tr>
-              <td>Chintan</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-            <tr>
-              <td>Chintan</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-            <tr>
-              <td>Chintan</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-            <tr>
-              <td>shrey</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-
-            <tr>
-              <td>XYZ</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-
-            <tr>
-              <td>XYZ</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-
-            <tr>
-              <td>XYZ</td>
-              <td>Organiser</td>
-              <td>SYSadmin</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };
 
