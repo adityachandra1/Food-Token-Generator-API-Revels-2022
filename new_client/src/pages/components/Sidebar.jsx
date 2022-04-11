@@ -6,7 +6,7 @@ import ProfileContent from "./ProfileContent";
 function Sidebar() {
   const navigate = useNavigate();
   return (
-    <div className="sidebar-container d-flex flex-column align-items-center">
+    <div className="sidebar-container d-flex flex-wrap justify-content-around align-items-center">
       <button
         className="active-sidebar-btn sidebar-btn"
         onClick={() => {

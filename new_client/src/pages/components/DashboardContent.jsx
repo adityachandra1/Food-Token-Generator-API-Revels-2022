@@ -51,7 +51,9 @@ function DashboardContent() {
   const func = async () => {
     await axios
       .get("http://localhost:8080/get-volunteers-by-cat", {
-        categoryName: "SYSTEM ADMIN",
+        headers: {
+          authorization: JSON.parse(sessionStorage.getItem("currentUser")),
+        },
       })
       .then(function (response) {
         // handle success

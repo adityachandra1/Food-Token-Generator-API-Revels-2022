@@ -14,6 +14,7 @@
   background: #08080a;
   min-height: 100vh;
   width: 100%;
+  padding: 2rem 0;
   font-family: "Roboto";
   color: rgba(255, 255, 255, 1);
 }
