@@ -55,7 +55,6 @@
 }
 
 .list-heading {
-    width: 10em;
     z-index: 2;
     margin-right: 12em;
     margin-top: 10px;
@@ -65,10 +64,10 @@
     font-size: 22px;
     line-height: 25px;
     color: #cfcdcd;
-    margin-left: 1em;
 }
 
-.search-bar {
+
+/* .search-bar {
     margin-right: 1em;
 }
 
@@ -108,8 +107,10 @@
     border: none;
     margin-left: 1em;
 }
+ */
 
-.dashboard-part .users-box {
+
+/* .dashboard-part .users-box {
     margin-top: 1em;
     height: 346px;
     width: 60vw;
@@ -195,7 +196,7 @@ input[type="checkbox"]:checked {
     line-height: 22px;
     text-align: center;
     color: #ffffff;
-}
+} */
 
 .mini-text {
     margin-left: 2em;
