@@ -12,15 +12,7 @@ function Sidebar() {
       <button className="sidebar-btn" onClick={() => {
         navigate("/history");
       }} >History</button>
-      <button
-        className="sidebar-btn"
-        onClick={() => {
-          sessionStorage.removeItem("currentUser");
-          navigate("/");
-        }}
-      >
-        Log Out
-      </button>
+      
     </div>
   );
 }

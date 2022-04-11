@@ -13,7 +13,7 @@ const History = (isLoggedIn) => {
       navigate("/");
     }
     const jwt = sessionStorage.getItem("currentUser");
-
+    console.log(jwt);
     try {
       const res = await axios.get(
         "http://localhost:8080/getstats",
