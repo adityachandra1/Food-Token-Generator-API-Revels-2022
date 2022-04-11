@@ -6,52 +6,76 @@
 .dashboard-container h4,
 .dashboard-container h5,
 .dashboard-container h6 {
-    color: rgba(255, 255, 255, 1);
-    font-family: "Roboto";
+  color: rgba(255, 255, 255, 1);
+  font-family: "Roboto";
 }
 
 .dashboard-container {
-    background: #08080a;
-    min-height: 100vh;
-    width: 100vw;
-    font-family: "Roboto";
-    color: rgba(255, 255, 255, 1);
+  background: #08080a;
+  min-height: 100vh;
+  width: 100vw;
+  font-family: "Roboto";
+  color: rgba(255, 255, 255, 1);
 }
 
 .left-part {
-    text-align: left;
-    padding-top: 3em;
+  text-align: left;
+  padding-top: 3em;
 }
 
 .logo {
-    margin-left: 1em;
-    margin-bottom: 2em;
+  margin-left: 1em;
+  margin-bottom: 2em;
 }
 
 .right-part {
-    margin-left: -2em;
+  margin-left: -2em;
 }
 
 .leftCircle {
-    position: absolute;
-    width: 300.64px;
-    height: 279.23px;
-    left: 25vw;
-    top: 50vh;
-    background: linear-gradient( 97.61deg, #3542d3 -18.04%, #303e7c 95.17%, #303e7c 188.52%);
-    filter: blur(127.473px);
-    z-index: 1;
-    /* transform: rotate(0.18deg); */
+  position: absolute;
+  width: 300.64px;
+  height: 279.23px;
+  left: 25vw;
+  top: 50vh;
+  background: linear-gradient(
+    97.61deg,
+    #3542d3 -18.04%,
+    #303e7c 95.17%,
+    #303e7c 188.52%
+  );
+  filter: blur(127.473px);
+  z-index: -1;
+  /* transform: rotate(0.18deg); */
 }
 
 .rightCircle {
-    position: absolute;
-    width: 300.64px;
-    height: 420.23px;
-    left: 72vw;
-    top: 30vh;
-    border-radius: 50%;
-    background: linear-gradient( 97.61deg, #3542d3 -18.04%, #303e7c 95.17%, #303e7c 188.52%);
-    filter: blur(90.473px);
-    transform: rotate(-171.18deg);
+  position: absolute;
+  width: 300.64px;
+  height: 420.23px;
+  left: 72vw;
+  top: 30vh;
+  z-index: -1;
+  border-radius: 50%;
+  background: linear-gradient(
+    97.61deg,
+    #3542d3 -18.04%,
+    #303e7c 95.17%,
+    #303e7c 188.52%
+  );
+  filter: blur(90.473px);
+  transform: rotate(-171.18deg);
+}
+
+.ant-list-item {
+  background-color: #fff;
+}
+
+.ant-list-header,
+.ant-list-bordered.ant-list-sm .ant-list-header {
+  background-color: #fafafa;
+}
+
+.ant-list-empty-text {
+  background-color: #fff;
 }

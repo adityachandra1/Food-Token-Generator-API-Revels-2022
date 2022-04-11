@@ -100,7 +100,6 @@ const isAdminLoggedIn = async (req, res, next) => {
     // console.log(req.headers);
     const token = req.headers["authorization"];
 
-    console.log(token);
     if (typeof token !== "undefined") {
       let payload = await jwt.verify(token, process.env.JWT_SECRET);
       console.log("Payload ", payload);

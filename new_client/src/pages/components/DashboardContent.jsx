@@ -1,34 +1,47 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
-import axios from "axios";
+import { Select, List, Typography, Divider } from "antd";
+const axios = require("axios").default;
+
+const { Option } = Select;
+
 function DashboardContent() {
   const [name, setName] = useState("");
   const [USERS, setUSERS] = useState([]);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [_checked, setChecked] = useState(false); // the search result
 
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
 
   const gen = async () => {
-    console.log("users", selectedUsers);
-
     const jwt = sessionStorage.getItem("currentUser");
-    try {
-      const res = await axios.post(
+    console.log(jwt);
+    await axios
+      .post(
         "http://localhost:8080/create-token",
-        { email: selectedUsers },
+        {},
         {
           headers: {
             authorization: jwt,
-            "Content-Type": "application/json",
           },
         }
-      );
-      console.log("Success", res);
-    } catch (err) {
-      console.log("error", err);
-    }
+      )
+      .then(function (response) {
+        // handle success
+
+        console.log(response.data);
+
+        setFoundUsers(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
   };
 
   const func = async () => {
@@ -51,29 +64,9 @@ function DashboardContent() {
         // always executed
       });
   };
-
-  console.log("HIHI");
-
   React.useEffect(() => {
     func();
   }, []);
-
-  const onhandleCheckboxChange = (e, user) => {
-    console.log(e.target.checked);
-    if (e.target.checked) {
-      setSelectedUsers([...selectedUsers, user]);
-    } else {
-      const filtered = selectedUsers.filter(
-        (eachItem) => eachItem._id !== user._id
-      );
-      // setSelectedUsers(filtered);
-
-      // const filtered = selectedUsers.splice(i, 1);
-
-      setSelectedUsers(filtered);
-    }
-    console.log(selectedUsers);
-  };
 
   const filter = (e) => {
     const keyword = e.target.value;
@@ -92,10 +85,9 @@ function DashboardContent() {
 
     setName(keyword);
   };
+
   return (
     <div className="dashboard-part container d-flex justify-content-center">
-      {console.log("USERSSSS", USERS)}
-      {console.log("foundUsers", foundUsers)}
       <div className="pagination d-flex flex-row justify-content-center">
         <div className="dot"></div>
         <div className="dot"></div>
@@ -112,25 +104,42 @@ function DashboardContent() {
           Volunteers
         </a>
       </div>
-      <div className="list d-flex flex-column justify-content-center align-self-end">
-        <div className="list-header d-flex flex-row">
-          <h3 className="list-heading">List of Organisers:</h3>
-          <div className="search-bar d-flex flex-row align-items-center mx-auto">
-            <label htmlFor="search-input"></label>
-            <input
-              type="search"
-              className="searchInput"
-              value={name}
-              onChange={filter}
-              id="search-input"
-              name="search-input"
-              placeholder="Search"
-            />
-            <button className="search-btn">Select all</button>
-          </div>
-        </div>
-        <div className="users-box d-flex flex-column justify-content-between">
-          {foundUsers.length > 0 ? (
+      <div className="list d-flex flex-column justify-content-center align-self-end my-5">
+        <h3>Select from the list of organizers</h3>
+        <Select
+          showSearch
+          mode="multiple"
+          placeholder="Search to Select"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+          filterSort={(optionA, optionB) =>
+            optionA.children
+              .toLowerCase()
+              .localeCompare(optionB.children.toLowerCase())
+          }
+          // store selected users in setSelectedUsers
+          onChange={(value) => {
+            setSelectedUsers(value);
+          }}
+        >
+          {console.log("Selected", selectedUsers)}
+          {foundUsers.map((user) => (
+            <Option key={user._id} value={user._id}>
+              {user.name}
+            </Option>
+          ))}
+        </Select>
+        <List
+          size="small"
+          header={<div>Selected users</div>}
+          // footer={<div>Footer</div>}
+          bordered
+          dataSource={selectedUsers}
+          renderItem={(item) => <List.Item>{item}</List.Item>}
+        />
+        {/* {foundUsers.length > 0 ? (
             foundUsers.map((user) => {
               return (
                 <li key={user._id} className="User">
@@ -150,8 +159,7 @@ function DashboardContent() {
             })
           ) : (
             <h3>No results found!</h3>
-          )}
-        </div>
+          )} */}
 
         <div className="mini-text">System admin and web development</div>
 
