@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
+import { Select } from "antd";
 const axios = require("axios").default;
+
+const { Option } = Select;
 
 function DashboardContent() {
   const [name, setName] = useState("");
@@ -12,22 +15,24 @@ function DashboardContent() {
   // the search result
   const [foundUsers, setFoundUsers] = useState(USERS);
 
-  
-const gen=async () =>{
-  const jwt = sessionStorage.getItem("currentUser");
-  console.log(jwt);
-  await axios
-      .post("http://localhost:8080/create-token",{} , {
-        headers: {
-          authorization: jwt,
-        },
-    
-      })
+  const gen = async () => {
+    const jwt = sessionStorage.getItem("currentUser");
+    console.log(jwt);
+    await axios
+      .post(
+        "http://localhost:8080/create-token",
+        {},
+        {
+          headers: {
+            authorization: jwt,
+          },
+        }
+      )
       .then(function (response) {
         // handle success
 
         console.log(response.data);
-     
+
         setFoundUsers(response.data);
       })
       .catch(function (error) {
@@ -37,10 +42,7 @@ const gen=async () =>{
       .then(function () {
         // always executed
       });
-
-
-}
-
+  };
 
   const func = async () => {
     await axios
@@ -66,23 +68,6 @@ const gen=async () =>{
     func();
   }, []);
 
-  const onhandleCheckboxChange = (e, user) => {
-    console.log(e.target.checked);
-    if (e.target.checked) {
-      setSelectedUsers([...selectedUsers, user]);
-    } else {
-      const filtered = selectedUsers.filter(
-        (eachItem) => eachItem._id !== user._id
-      );
-      // setSelectedUsers(filtered);
-
-      // const filtered = selectedUsers.splice(i, 1);
-
-      setSelectedUsers(filtered);
-    }
-    console.log("selected bitch", selectedUsers);
-  };
-
   const filter = (e) => {
     const keyword = e.target.value;
 
@@ -100,29 +85,7 @@ const gen=async () =>{
 
     setName(keyword);
   };
-  const handleSelectAll = () => {
-    console.log(_checked);
-    setSelectedUsers(USERS);
-    const checkbox = document.querySelectorAll("#User-id-checkbox");
-    if (_checked) {
-      for (let i = 0; i < checkbox.length; i++) {
-        console.log("1", checkbox[i].checked);
-        checkbox[i].checked = false;
-      }
-      setChecked(false);
-      setSelectedUsers(USERS);
-    } else {
-      for (let i = 0; i < checkbox.length; i++) {
-        console.log("2", checkbox[i].checked);
-        checkbox[i].checked = true;
-      }
 
-      setChecked(true);
-      setSelectedUsers([]);
-    }
-
-    console.log("selected", selectedUsers);
-  };
   return (
     <div className="dashboard-part container d-flex justify-content-center">
       <div className="pagination d-flex flex-row justify-content-center">
@@ -144,22 +107,28 @@ const gen=async () =>{
       <div className="list d-flex flex-column justify-content-center align-self-end">
         <div className="list-header d-flex flex-row">
           <h3 className="list-heading">List of Organisers:</h3>
-          <div className="search-bar d-flex flex-row align-items-center mx-auto">
-            <label htmlFor="search-input"></label>
-            <input
-              type="search"
-              className="searchInput"
-              value={name}
-              onChange={filter}
-              id="search-input"
-              name="search-input"
-              placeholder="Search"
-            />
-            <button className="search-btn" onClick={handleSelectAll}>Select all</button>
-          </div>
         </div>
-        <div className="users-box d-flex flex-column justify-content-between">
-          {foundUsers.length > 0 ? (
+        <Select
+          showSearch
+          mode="multiple"
+          placeholder="Search to Select"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+          filterSort={(optionA, optionB) =>
+            optionA.children
+              .toLowerCase()
+              .localeCompare(optionB.children.toLowerCase())
+          }
+        >
+          {foundUsers.map((user) => (
+            <Option key={user._id} value={user._id}>
+              {user.name}
+            </Option>
+          ))}
+        </Select>
+        {/* {foundUsers.length > 0 ? (
             foundUsers.map((user) => {
               return (
                 <li key={user._id} className="User">
@@ -179,12 +148,14 @@ const gen=async () =>{
             })
           ) : (
             <h3>No results found!</h3>
-          )}
-        </div>
+          )} */}
 
         <div className="mini-text">System admin and web development</div>
 
-        <button className="TokenBtn d-flex justify-content-center mx-auto" onClick={gen}>
+        <button
+          className="TokenBtn d-flex justify-content-center mx-auto"
+          onClick={gen}
+        >
           Generate Tokens
         </button>
       </div>

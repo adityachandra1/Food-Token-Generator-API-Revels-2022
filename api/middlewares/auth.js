@@ -97,9 +97,18 @@ const isVerifiedForRevels = async (req, res, next) => {
 const isAdminLoggedIn = async (req, res, next) => {
   try {
     console.log("is Admin login middleware");
-    const token = JSON.parse(req.headers["authorization"]);
+    console.log(req.headers["authorization"]);
+    const token = req.headers["authorization"];
 
-    console.log(token);
+    if (!token || token === null || token === undefined || token === "null") {
+      res.status(400).send({
+        success: false,
+        msg: "Token not found",
+      });
+      return;
+    }
+    console.log("NEECEH");
+
     if (typeof token !== "undefined") {
       let payload = await jwt.verify(token, process.env.JWT_SECRET);
       console.log("Payload ", payload);
