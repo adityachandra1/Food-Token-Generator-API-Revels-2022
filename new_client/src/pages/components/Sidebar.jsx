@@ -6,11 +6,6 @@ function Sidebar() {
   const navigate = useNavigate();
   return (
     <div className="sidebar-container">
-      <a className="sidebar-btn active-sidebar-btn" href="/">
-        Dashboard
-      </a>
-      <br />
-      <br />
       <button
         className="sidebar-btn"
         onClick={() => {

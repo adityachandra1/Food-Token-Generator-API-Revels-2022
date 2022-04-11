@@ -3,24 +3,31 @@ import Sidebar from "./components/Sidebar.jsx";
 import "./CSS/History.css";
 import { useEffect } from "react";
 import axios from "axios";
-const History = () => {
+import { Navigate, useNavigate } from "react-router-dom";
+
+const History = (isLoggedIn) => {
+  const navigate = useNavigate();
+
   useEffect(async () => {
-    const jwt = JSON.parse(localStorage.getItem("jwt"));
-
-    await axios
-      .get("http://localhost:8080/getstats", {
-        headers: {
-          "x-access-token": jwt,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-
-        // props.history.push("/")
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    if (!isLoggedIn && !sessionStorage.getItem("currentUser")) {
+      navigate("/");
+    }
+    const jwt = sessionStorage.getItem("currentUser");
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/getstats",
+        {},
+        {
+          headers: {
+            authorization: jwt,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Success", res);
+    } catch (err) {
+      console.log("error", err);
+    }
   }, []);
 
   return (

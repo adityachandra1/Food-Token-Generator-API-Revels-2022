@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 var x;
 
-const Login = (e) => {
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,12 +24,21 @@ const Login = (e) => {
       .then(function (response) {
         x = response.data.data.token;
         sessionStorage.setItem("currentUser", JSON.stringify(x));
+        setIsLoggedIn(!isLoggedIn);
         navigate("/dashboard");
       })
       .catch(function (error) {
         console.log(error);
+        setIsLoggedIn(false);
       });
   };
+
+  useEffect(() => {
+    if (isLoggedIn && sessionStorage.getItem("currentUser") !== null) {
+      console.log("Log hai");
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <div className="login-main-container">
