@@ -7,7 +7,12 @@
     color: rgba(255, 255, 255, 1);
 }
 
-.history-sidebar {}
+.table {
+    margin-top: 2em;
+    color: white;
+    text-align: center;
+    /* background: #000; */
+}
 
 
 /* .table-holder {
