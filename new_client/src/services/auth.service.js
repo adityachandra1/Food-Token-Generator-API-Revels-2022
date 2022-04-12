@@ -1,9 +1,10 @@
 import axios from "axios";
+import { BACKEND_URL } from "../constant";
 
 export const checkLoggedIn = async (jwt) => {
   try {
     if (jwt) {
-      const res = await axios.get("http://localhost:8080/check-logged-in", {
+      const res = await axios.get(`${BACKEND_URL}/check-logged-in`, {
         headers: {
           authorization: jwt,
         },

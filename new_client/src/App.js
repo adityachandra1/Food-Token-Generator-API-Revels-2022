@@ -39,7 +39,7 @@ function App() {
           }
         />
         <Route path="" element={<Navigate to="/" />} />
-        <Route exact path="/send-tokens" element={<GenTokens />} />
+        {/* <Route exact path="/send-tokens" element={<GenTokens />} /> */}
         <Route
           exact
           path="/dashboard"

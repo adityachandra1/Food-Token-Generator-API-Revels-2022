@@ -3,6 +3,7 @@ import "./css/DashboardContent.css";
 import { Select, List, Popconfirm, notification, Button, Row, Col } from "antd";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { BACKEND_URL } from "../../constant";
 const { Option } = Select;
 
 function DashboardContent() {
@@ -25,7 +26,7 @@ function DashboardContent() {
     setIsLoading(true);
     await axios
       .post(
-        "http://localhost:8080/create-token",
+        `${BACKEND_URL}/create-token`,
         {
           email: finalUsers,
         },
@@ -64,7 +65,7 @@ function DashboardContent() {
 
   const func = async () => {
     await axios
-      .get("http://localhost:8080/get-volunteers-by-cat", {
+      .get(`${BACKEND_URL}/get-volunteers-by-cat`, {
         headers: {
           authorization: jwt,
         },

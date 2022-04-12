@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../store/user.slice";
+import { BACKEND_URL } from "../constant";
 
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const postPass = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/login", {
+      .post(`${BACKEND_URL}/login`, {
         email: `${email}`,
         password: `${password}`,
       })

@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
+import { BACKEND_URL } from "../constant.js";
 const History = (isLoggedIn) => {
   const navigate = useNavigate();
   const { jwt } = useSelector((state) => state.user);
@@ -17,7 +18,7 @@ const History = (isLoggedIn) => {
       navigate("/");
     }
     try {
-      const res = await axios.get("http://localhost:8080/getstats", {
+      const res = await axios.get(`${BACKEND_URL}/getstats`, {
         headers: {
           authorization: jwt,
         },
