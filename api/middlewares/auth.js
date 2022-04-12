@@ -101,35 +101,52 @@ const isAdminLoggedIn = async (req, res, next) => {
     console.log("is Admin login middleware");
     // console.log(req.headers);
     const token = req.headers["authorization"];
-
+    console.log("token", token);
+    if (
+      token === null ||
+      token === undefined ||
+      token === "null" ||
+      !token ||
+      token.length === 0
+    ) {
+      return res.status(400).send({
+        success: false,
+        msg: "Invalid Token",
+      });
+    }
     if (typeof token !== "undefined") {
-      let payload = await jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Payload ", payload);
-      if (!payload) {
-        console.log("XXXXXXXXXXX");
-      }
+      let payload = jwt.verify(token, process.env.JWT_SECRET);
+
       if (payload) {
         console.log("id:", payload.admin_Id);
-        let admin = await Admin.findOne({
-          _id: payload.admin_Id,
-          token,
-        }).populate("role");
 
-        // populate the user with the category
-        const categoryId = admin.role.categoryId;
-        const categoryData = await Category.findById(categoryId);
-        const categoryName = categoryData.category;
+        try {
+          let admin = await Admin.findOne({
+            _id: payload.admin_Id,
+            token,
+          }).populate("role");
 
-        req.categoryName = categoryName;
+          // populate the user with the category
+          const categoryId = admin.role.categoryId;
+          const categoryData = await Category.findById(categoryId);
+          const categoryName = categoryData.category;
 
-        if (admin) {
-          req.requestAdmin = admin;
-          next();
-        } else {
-          return res.status(401).send({
-            success: false,
-            msg: "Token Invalid,Please Login",
-          });
+          req.categoryName = categoryName;
+
+          if (admin) {
+            req.requestAdmin = admin;
+            next();
+          } else {
+            return res.status(401).send({
+              success: false,
+              msg: "Token Invalid,Please Login",
+            });
+          }
+        } catch (err) {
+          console.log(err);
+          return res
+            .status(500)
+            .send({ success: false, msg: "Internal Server Error" });
         }
       } else {
         return res.status(401).send({

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
-import { Select, List, Popconfirm, message, Button, Row, Col } from "antd";
+import { Select, List, Popconfirm, notification, Button, Row, Col } from "antd";
 const axios = require("axios").default;
 
 const { Option } = Select;
@@ -39,6 +39,14 @@ function DashboardContent() {
         // handle success
         setIsLoading(false);
         console.log(response.data);
+        notification.success({
+          message: "Success",
+          description: "Token generated successfully",
+        });
+        notification.info({
+          message: "Duplicate Approvals",
+          description: `You have already generated a token for some users`,
+        });
       })
       .catch(function (error) {
         // handle error
@@ -137,6 +145,7 @@ function DashboardContent() {
               margin: "1rem 0",
             }}
             showSearch
+            // remove tags
             allowClear
             mode="multiple"
             placeholder="Search to Select"
@@ -169,13 +178,28 @@ function DashboardContent() {
         bordered
         dataSource={selectedUsers}
         renderItem={(item) => (
-          <List.Item>
+          <List.Item
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             {
               // name of user using the id
               foundUsers.find((user) => user._id === item).name +
                 ": ID is  " +
                 item
             }
+
+            <Button
+              type="danger"
+              onClick={() => {
+                // remove the id from selectedUsers
+                setSelectedUsers(selectedUsers.filter((id) => id !== item));
+              }}
+            >
+              Remove
+            </Button>
           </List.Item>
         )}
       />
