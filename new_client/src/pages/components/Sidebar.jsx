@@ -21,7 +21,7 @@ function Sidebar() {
           navigate("/history");
         }}
       >
-        History
+        Token Stats
       </button>
       <ProfileContent />
     </div>

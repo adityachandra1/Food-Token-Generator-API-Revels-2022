@@ -44,40 +44,58 @@ const History = (isLoggedIn) => {
       <Col span={24}>
         <Sidebar />
       </Col>
-      <div className="container">
-        <table className="table">
-          <thead className="">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-              <th scope="col">something</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {stats &&
-              stats.map((stat, index) => (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{stat.first}</td>
-                  <td>{stat.last}</td>
-                  <td>{stat.handle}</td>
-                  <td>{stat.something}</td>
-                  {console.log("stat", stat)}
-                </tr>
-              ))} */}
+      <Col span={24}>
+        {stats.length === 0 && (
+          <div
+            style={{
+              fontSize: "2rem",
+              color: "#FFF",
+              textAlign: "center",
+            }}
+          >
+            Loading...
+          </div>
+        )}
+      </Col>
+      {stats.length > 0 && (
+        <div className="container">
+          <table className="table">
+            <thead className="">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Expired</th>
+                <th scope="col">Redeemed</th>
+                <th scope="col">Given</th>
+                <th scope="col">Given By SC</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stats &&
+                stats.map((stat, index) => (
+                  <tr key={index}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{stat?.category?.category}</td>
+                    <td>{stat.tokensExpired}</td>
+                    <td>{stat.tokensRedeemed}</td>
+                    <td>{stat.tokensGiven}</td>
+                    <td>{stat.tokensGivenBySC}</td>
 
-            {/* <tr>
+                    {console.log("stat", stat)}
+                  </tr>
+                ))}
+
+              {/* <tr>
               <th scope="row">1</th>
               <td>Mark</td>
               <td>Otto</td>
               <td>Otto</td>
               <td>@mdo</td>
             </tr> */}
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
+      )}
     </Row>
   );
 };

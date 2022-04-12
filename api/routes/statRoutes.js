@@ -18,13 +18,14 @@ router.get(
     try {
       const categories = await Category.find({});
       let tokens_given_by_SC = 0;
-      let stats = {};
+      let stats = [];
+      let idx = 0;
       for (const cat of categories) {
         const volunteers = await Volunteer.find({ category: cat["_id"] });
         let tokens_expired = 0,
           tokens_redeemed = 0,
           tokens_given = 0;
-        stats[cat.category] = {};
+
         volunteers.forEach(function (vol) {
           vol.foodTokens.forEach(function (token) {
             if (!token.isSC) {
@@ -40,10 +41,16 @@ router.get(
               tokens_expired++;
           });
         });
-        stats[cat.category]["tokensExpired"] = tokens_expired;
-        stats[cat.category]["tokensRedeemed"] = tokens_redeemed;
-        stats[cat.category]["tokensGiven"] = tokens_given;
-        stats[cat.category]["tokensGivenBySC"] = tokens_given_by_SC;
+
+        const statsObj = {
+          category: cat,
+          tokensExpired: tokens_expired,
+          tokensRedeemed: tokens_redeemed,
+          tokensGiven: tokens_given,
+          tokensGivenBySC: tokens_given_by_SC,
+        };
+
+        stats.push(statsObj);
       }
       res.send({ stats: stats, timestamp: new Date().toLocaleString() });
     } catch (error) {
