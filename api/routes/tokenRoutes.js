@@ -64,7 +64,16 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
       };
 
       let img = await QRCode.toDataURL(link);
-      let body = '<h2>Your Token</h2></br> <img src="' + img + '">';
+      let body = 
+      ` <h1>Your Food Token</h1>
+            <img class="image-div" src="${img}" alt=""/>
+            <br>
+            <small class="subtitle">Expires in 3 hrs</small>
+            <br>
+            <small>For any queries contact your CCs</small>
+            <small></small>
+            <br>
+            <h3 class="footer">Sent by System Admin , Revels 2022 ❤️ </h3>`;
       let em = await mailer.sendEmailNotif(
         email,
         "FOOD TOKEN",
