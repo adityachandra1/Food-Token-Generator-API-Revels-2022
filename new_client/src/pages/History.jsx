@@ -10,8 +10,8 @@ import { Col, Row } from "antd";
 
 const History = (isLoggedIn) => {
   const navigate = useNavigate();
-
-  useEffect(async () => {
+  const [stats, setStats] = React.useState([]);
+  const getHistory = async () => {
     if (!isLoggedIn && !sessionStorage.getItem("currentUser")) {
       navigate("/");
     }
@@ -29,9 +29,14 @@ const History = (isLoggedIn) => {
         }
       );
       console.log("Success", res.data.stats);
+      setStats(res.data.stats);
     } catch (err) {
       console.log("error", err);
     }
+  };
+
+  useEffect(() => {
+    getHistory();
   }, []);
 
   return (
@@ -51,14 +56,25 @@ const History = (isLoggedIn) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            {/* {stats &&
+              stats.map((stat, index) => (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{stat.first}</td>
+                  <td>{stat.last}</td>
+                  <td>{stat.handle}</td>
+                  <td>{stat.something}</td>
+                  {console.log("stat", stat)}
+                </tr>
+              ))} */}
+
+            {/* <tr>
               <th scope="row">1</th>
               <td>Mark</td>
               <td>Otto</td>
               <td>Otto</td>
               <td>@mdo</td>
-            </tr>
-           
+            </tr> */}
           </tbody>
         </table>
       </div>

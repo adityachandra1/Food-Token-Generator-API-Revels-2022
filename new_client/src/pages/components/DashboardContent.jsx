@@ -43,10 +43,16 @@ function DashboardContent() {
           message: "Success",
           description: "Token generated successfully",
         });
-        notification.info({
-          message: "Duplicate Approvals",
-          description: `You have already generated a token for some users`,
-        });
+
+        const erroremails = response.data.error_list;
+        if (erroremails.length > 0) {
+          erroremails.forEach((email) => {
+            notification.info({
+              message: "Already generated token",
+              description: `${email}l`,
+            });
+          });
+        }
       })
       .catch(function (error) {
         // handle error
