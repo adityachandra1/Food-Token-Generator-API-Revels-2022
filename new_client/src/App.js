@@ -4,22 +4,22 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/DashboardPage";
 import GenTokens from "./pages/GenTokens";
 import History from "./pages/History";
-import "antd/dist/antd.css";
 import { useEffect } from "react";
 import { useState } from "react";
 import { checkLoggedIn } from "./services/auth.service";
-import { useLocation } from "react-router-dom";
 
+import "antd/dist/antd.css";
 function App() {
-  let location = useLocation();
+  const userSession = sessionStorage.getItem("userSession");
   const [isLoggedIn, setIsLoggedIn] = useState(null);
-  useEffect(async () => {
+  const checkLoggedInAsync = async () => {
     const res = await checkLoggedIn();
     if (res.status === 200) setIsLoggedIn(true);
     else setIsLoggedIn(false);
-
-    console.log("REsSS,", res);
-  }, [isLoggedIn]);
+  };
+  useEffect(() => {
+    checkLoggedInAsync();
+  }, [isLoggedIn, userSession]);
 
   if (isLoggedIn === null) {
     return <>Loading</>;

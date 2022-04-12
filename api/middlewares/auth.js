@@ -124,8 +124,16 @@ const isAdminLoggedIn = async (req, res, next) => {
           let admin = await Admin.findOne({
             _id: payload.admin_Id,
             token,
-          }).populate("role");
+          });
 
+          if (!admin) {
+            return res.status(401).send({
+              success: false,
+              msg: "Admin doesnt exist",
+            });
+          }
+          // try populating role
+          admin = await admin.populate("role");
           // populate the user with the category
           const categoryId = admin.role.categoryId;
           const categoryData = await Category.findById(categoryId);
