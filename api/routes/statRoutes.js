@@ -47,7 +47,7 @@ router.get("/getstats", isAdminLoggedIn, async (req, res) => {
         });
 
         const statsObj = {
-          category: cat,
+          category: cat.category,
           tokensExpired: tokens_expired,
           tokensRedeemed: tokens_redeemed,
           tokensGiven: tokens_given,
@@ -62,7 +62,8 @@ router.get("/getstats", isAdminLoggedIn, async (req, res) => {
       const volunteers = await Volunteer.find({ category: categoryId });
       let tokens_expired = 0,
         tokens_redeemed = 0,
-        tokens_given = 0;
+        tokens_given = 0,
+        tokens_given_by_SC = 0;
 
       volunteers.forEach(function (vol) {
         vol.foodTokens.forEach(function (token) {

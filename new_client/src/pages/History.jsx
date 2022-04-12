@@ -69,7 +69,7 @@ const History = (isLoggedIn) => {
                 stats.map((stat, index) => (
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
-                    <td>{stat?.category?.category}</td>
+                    <td>{stat.category}</td>
                     <td>{stat.tokensExpired}</td>
                     <td>{stat.tokensRedeemed}</td>
                     <td>{stat.tokensGiven}</td>
