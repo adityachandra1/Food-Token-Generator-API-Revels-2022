@@ -2,7 +2,6 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/DashboardPage";
-import GenTokens from "./pages/GenTokens";
 import History from "./pages/History";
 import { useEffect } from "react";
 import { useState } from "react";
