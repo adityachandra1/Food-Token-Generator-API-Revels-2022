@@ -187,8 +187,8 @@ function DashboardContent() {
             {
               // name of user using the id
               foundUsers.find((user) => user._id === item).name +
-                ": ID is  " +
-                item
+                " - " +
+                foundUsers.find((user) => user._id === item).email
             }
 
             <Button
