@@ -7,27 +7,21 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Col, Row } from "antd";
-
+import { useSelector } from "react-redux";
 const History = (isLoggedIn) => {
   const navigate = useNavigate();
+  const { jwt } = useSelector((state) => state.user);
   const [stats, setStats] = React.useState([]);
   const getHistory = async () => {
-    if (!isLoggedIn && !sessionStorage.getItem("currentUser")) {
+    if (!isLoggedIn && !jwt) {
       navigate("/");
     }
-    const jwt = sessionStorage.getItem("currentUser");
-    console.log(jwt);
     try {
-      const res = await axios.get(
-        "http://localhost:8080/getstats",
-        {},
-        {
-          headers: {
-            authorization: jwt,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await axios.get("http://localhost:8080/getstats", {
+        headers: {
+          authorization: jwt,
+        },
+      });
       console.log("Success", res.data.stats);
       setStats(res.data.stats);
     } catch (err) {
@@ -45,7 +39,7 @@ const History = (isLoggedIn) => {
         <Sidebar />
       </Col>
       <Col span={24}>
-        {stats.length === 0 && (
+        {stats && stats.length === 0 && (
           <div
             style={{
               fontSize: "2rem",
@@ -57,7 +51,7 @@ const History = (isLoggedIn) => {
           </div>
         )}
       </Col>
-      {stats.length > 0 && (
+      {stats && stats.length > 0 && (
         <div className="container">
           <table className="table">
             <thead className="">
@@ -75,7 +69,7 @@ const History = (isLoggedIn) => {
                 stats.map((stat, index) => (
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
-                    <td>{stat?.category?.category}</td>
+                    <td>{stat.category}</td>
                     <td>{stat.tokensExpired}</td>
                     <td>{stat.tokensRedeemed}</td>
                     <td>{stat.tokensGiven}</td>

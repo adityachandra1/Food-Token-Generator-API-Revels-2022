@@ -7,9 +7,11 @@ import wave2 from "./images/login/wave2.svg";
 import "./CSS/login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-var x;
+import { useDispatch } from "react-redux";
+import { login } from "../store/user.slice";
 
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +24,13 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         password: `${password}`,
       })
       .then(function (response) {
-        x = response.data.data.token;
+        let x = response.data.data.token;
+        dispatch(
+          login({
+            token: x,
+            user: null,
+          })
+        );
         sessionStorage.setItem("currentUser", JSON.stringify(x));
         setIsLoggedIn(!isLoggedIn);
         navigate("/dashboard");

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./css/DashboardContent.css";
 import { Select, List, Popconfirm, notification, Button, Row, Col } from "antd";
-const axios = require("axios").default;
-
+import { useSelector } from "react-redux";
+import axios from "axios";
 const { Option } = Select;
 
 function DashboardContent() {
+  const { jwt } = useSelector((state) => state.user);
+  console.log("JWT", jwt);
   const [USERS, setUSERS] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -20,8 +22,6 @@ function DashboardContent() {
       finalUsers.push(foundUsers.find((user) => user._id === id));
     });
 
-    const jwt = sessionStorage.getItem("currentUser");
-    console.log(jwt);
     setIsLoading(true);
     await axios
       .post(
@@ -31,7 +31,7 @@ function DashboardContent() {
         },
         {
           headers: {
-            authorization: JSON.parse(jwt),
+            authorization: jwt,
           },
         }
       )
@@ -66,7 +66,7 @@ function DashboardContent() {
     await axios
       .get("http://localhost:8080/get-volunteers-by-cat", {
         headers: {
-          authorization: JSON.parse(sessionStorage.getItem("currentUser")),
+          authorization: jwt,
         },
       })
       .then(function (response) {

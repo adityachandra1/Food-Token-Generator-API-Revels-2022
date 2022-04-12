@@ -1,16 +1,17 @@
 import axios from "axios";
 
-const jwt = sessionStorage.getItem("currentUser");
-console.log("JWT", jwt);
-export const checkLoggedIn = async () => {
+export const checkLoggedIn = async (jwt) => {
   try {
-    const res = await axios.get("http://localhost:8080/check-logged-in", {
-      headers: {
-        Authorization: JSON.parse(jwt),
-      },
-    });
-
-    return res;
+    if (jwt) {
+      const res = await axios.get("http://localhost:8080/check-logged-in", {
+        headers: {
+          authorization: jwt,
+        },
+      });
+      return res;
+    } else {
+      throw new Error("No JWT");
+    }
   } catch (err) {
     return err;
   }
