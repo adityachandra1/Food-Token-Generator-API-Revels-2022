@@ -135,10 +135,13 @@ const isAdminLoggedIn = async (req, res, next) => {
           // try populating role
           admin = await admin.populate("role");
           // populate the user with the category
+          const accessLevel = admin.role.accessLevel;
           const categoryId = admin.role.categoryId;
           const categoryData = await Category.findById(categoryId);
           const categoryName = categoryData.category;
 
+          req.accessLevel = accessLevel;
+          req.categoryId = categoryId;
           req.categoryName = categoryName;
 
           if (admin) {

@@ -7,19 +7,22 @@ import History from "./pages/History";
 import { useEffect } from "react";
 import { useState } from "react";
 import { checkLoggedIn } from "./services/auth.service";
-
+import { useSelector } from "react-redux";
 import "antd/dist/antd.css";
 function App() {
-  const userSession = sessionStorage.getItem("userSession");
+  const { jwt } = useSelector((state) => state.user);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const checkLoggedInAsync = async () => {
-    const res = await checkLoggedIn();
-    if (res.status === 200) setIsLoggedIn(true);
-    else setIsLoggedIn(false);
+    const res = await checkLoggedIn(jwt);
+    if (res.status === 200) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
   };
   useEffect(() => {
     checkLoggedInAsync();
-  }, [isLoggedIn, userSession]);
+  }, [jwt]);
 
   if (isLoggedIn === null) {
     return <>Loading</>;
