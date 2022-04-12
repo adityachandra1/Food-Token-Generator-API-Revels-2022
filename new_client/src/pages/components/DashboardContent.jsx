@@ -107,7 +107,8 @@ function DashboardContent() {
         }}
         className="subheader"
       >
-        Select from the list of organizers
+        Select from the list of organizers, number of organizers{" "}
+        {foundUsers.length}
       </h3>
       <Row>
         <Col span={24}>
@@ -179,7 +180,7 @@ function DashboardContent() {
       </Row>
       <List
         size="small"
-        header={<div>Selected users</div>}
+        header={<div>Selected users : {selectedUsers.length}</div>}
         // footer={<div>Footer</div>}
         bordered
         dataSource={selectedUsers}
