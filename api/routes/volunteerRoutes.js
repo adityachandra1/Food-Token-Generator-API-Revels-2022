@@ -29,10 +29,7 @@ router.post("/create-volunteer", isAdminLoggedIn, async (req, res) => {
   }
 });
 
-router.get(
-  "/get-volunteers-by-cat",
-  isAdminLoggedIn,
-  hasHRAccess,
+router.get("/get-volunteers-by-cat", isAdminLoggedIn, hasHRAccess,
   async (req, res) => {
     try {
       console.log("LMAOOO", req.categoryName);

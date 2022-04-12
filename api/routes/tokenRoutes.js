@@ -39,13 +39,14 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
     const emails = email_list.map((element) => element.email);
     console.log(emails);
     let error_list = new Array();
-
+    console.log(emails);
+    
     for (const email of emails) {
       const foodToken_jwt = createToken(email);
-      let link = `${process.env.BASE_URL}/api/redeem-token?token=` + foodToken_jwt;
+      let link = foodToken_jwt;
       const volun = await Volunteer.findOne({ email: email });
       const tokens_list = volun.foodTokens;
-      console.log(volun);
+      // console.log(volun);
       if (
         tokens_list.length > 0 &&
         Date.now() - tokens_list[tokens_list.length - 1].issueTime < limit &&
@@ -64,9 +65,10 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
       };
 
       let img = await QRCode.toDataURL(link);
+      console.log(img);
       let body = 
       ` <h1>Your Food Token</h1>
-            <img class="image-div" src="${img}" alt=""/>
+            <img class="image-div" src="${img}" alt="${img}"/>
             <br>
             <small class="subtitle">Expires in 3 hrs</small>
             <br>
@@ -74,6 +76,8 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
             <small></small>
             <br>
             <h3 class="footer">Sent by System Admin , Revels 2022 ❤️ </h3>`;
+      console.log(body);
+      // let body = '<h1>Hi</h1>';
       let em = await mailer.sendEmailNotif(
         email,
         "FOOD TOKEN",
@@ -101,7 +105,7 @@ router.post("/token-tester", async (req, res) => {
   try {
     const { email } = req.body;
     const foodToken_jwt = createToken(email);
-    let link = "https://www.google.com/search?q=" + foodToken_jwt;
+    let link = `${process.env.BASE_URL}/api/redeem-token?token=` + foodToken_jwt;
     const volun = await Volunteer.findOne({ email: email });
     const tokens_list = volun.foodTokens;
     // const check = tokens_list[tokens_list.length - 1].issueTime - Date.now();
@@ -134,18 +138,27 @@ router.post("/token-tester", async (req, res) => {
 });
 
 //add hfs check logged in here
-router.post("/redeem-token", async (req, res) => {
+router.get("/redeem-token", async (req, res) => {
   try {
     const toBeRedeemed = req.query.token;
     const payload = jwt.verify(toBeRedeemed, "HFS");
     const volun = await Volunteer.findOne({ email: payload.email });
     const tokens_list = volun.foodTokens;
-    for (obj in tokens_list) {
+    console.log(volun);
+        for (let i =0;i<tokens_list.length;i++) {
+          let obj=tokens_list[i];
+      console.log(obj);
       if (obj.token == toBeRedeemed) {
-        isRedemeed = true;
-        redeemTime = Date.now();
+        console.log(obj);
+        if(obj.isRedeemed == true){
+          return res.status(400).json({ message: "Token already redeemed!" });
+        }
+        obj.isRedeemed = true;
+        obj.redeemTime = Date.now();
+        console.log(obj);
       }
     }
+
     await Volunteer.findOneAndUpdate(
       { email: payload.email },
       { foodTokens: tokens_list }
