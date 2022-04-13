@@ -81,7 +81,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
         email,
         "FOOD TOKEN",
         body,
-        "FOOD TOKEN"
+        "FOOD TOKEN" 
       );
       console.log(em);
       // console.log(img);
