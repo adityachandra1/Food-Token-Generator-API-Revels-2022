@@ -146,7 +146,7 @@ router.post("/token-tester", async (req, res) => {
 });
 
 //add hfs check logged in here
-router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
+router.get("/redeem-token", /*isAdminLoggedIn,*/ async (req, res) => {
   try {
     const toBeRedeemed = req.query.token;
     const payload = jwt.verify(toBeRedeemed, "HFS");
@@ -157,13 +157,13 @@ router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
       let obj = tokens_list[i];
       console.log(obj);
       if (obj.token == toBeRedeemed) {
-        console.log(obj);
+        // console.log(obj);
         if (obj.isRedeemed == true) {
           return res.status(400).json({ message: "Token already redeemed!" });
         }
         obj.isRedeemed = true;
         obj.redeemTime = Date.now();
-        console.log(obj);
+        // console.log(obj);
       }
     }
 
@@ -176,7 +176,7 @@ router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
       .json({ message: "Token Redeemed! for email : " + payload.email });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: err.toString() });
+    return res.status(400).json({ message: err.toString() });
   }
 });
 
