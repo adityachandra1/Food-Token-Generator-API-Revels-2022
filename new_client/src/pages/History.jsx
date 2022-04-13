@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import "antd/dist/antd.css";
 import Sidebar from "./components/Sidebar.jsx";
 import "./CSS/History.css";
@@ -21,9 +21,11 @@ const History = (isLoggedIn) => {
       .post(`${BACKEND_URL}/token-tester`, { email })
       .then(function (response) {
         console.log(response);
+        console.log("success");
       })
       .catch(function (error) {
         console.log(error);
+        console.log("error");
       });
   }
 
@@ -50,17 +52,30 @@ const History = (isLoggedIn) => {
 
   return (
     <>
-      <form onSubmit={submitHandler}>
-        <input
-          type="text"
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <button type="submit"></button>
-      </form>
       <Row className="history-container">
         <Col span={24}>
           <Sidebar />
+        </Col>
+        <Col span={24}>
+          <form onSubmit={submitHandler}>
+            <input
+              className="textbox"
+              type="text"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+            />
+            <Button
+              ClassName="textbox-button"
+              type="primary"
+              htmlType="submit"
+              style={{
+                width: "8rem",
+                marginLeft: "0.5rem",
+              }}
+            >
+              Send
+            </Button>
+          </form>
         </Col>
         <Col span={24}>
           {stats && stats.length === 0 && (
