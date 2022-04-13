@@ -37,7 +37,7 @@ router.get("/get-volunteers-by-cat", isAdminLoggedIn, hasHRAccess,
       let volunteers = [];
       const cat = await Category.findOne({ category: categoryName });
       if (cat != null) {
-        volunteers = await Volunteer.find({ category: cat["_id"] });
+        volunteers = await Volunteer.find({ category: cat._id });
       } else {
         volunteers = await Volunteer.find({});
       }
