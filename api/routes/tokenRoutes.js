@@ -104,6 +104,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
 router.post("/token-tester", async (req, res) => {
   try {
     const { email } = req.body;
+    console.log(email);
     const foodToken_jwt = createToken(email);
     let link = foodToken_jwt;
     const volun = await Volunteer.findOne({ email: email });
