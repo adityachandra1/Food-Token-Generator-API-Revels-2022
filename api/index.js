@@ -24,8 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose
   .connect(
-    process.env.DB_URI ||
-      "mongodb+srv://dbuser:dbuser@cluster0.ujfux.mongodb.net/TestingRevels22?retryWrites=true&w=majority",
+    process.env.MONGO_URI,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

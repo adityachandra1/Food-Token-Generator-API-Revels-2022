@@ -65,7 +65,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
       };
 
       let img = await QRCode.toDataURL(link);
-      console.log(img);
+      // console.log(img);
       let body = ` <h1>Your Food Token</h1>
             <img class="image-div" src="${img}" alt="${img}"/>
             <br>
@@ -75,22 +75,23 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
             <small></small>
             <br>
             <h3 class="footer">Sent by System Admin , Revels 2022 ❤️ </h3>`;
-      console.log(body);
+      // console.log(body);
       // let body = '<h1>Hi</h1>';
       let em = await mailer.sendEmailNotif(
         email,
         "FOOD TOKEN",
         body,
-        "FOOD TOKEN"
+        "FOOD TOKEN" 
       );
-      console.log(img);
+      console.log(em);
+      // console.log(img);
       tokens_list.push(obj);
       await Volunteer.findOneAndUpdate(
         { email: email },
         { foodTokens: tokens_list }
       );
-      console.log(tokens_list);
-      console.log(volun);
+      // console.log(tokens_list);
+      // console.log(volun);
     }
     return res.status(200).json({ message: "Success", error_list: error_list });
   } catch (error) {
@@ -105,8 +106,7 @@ router.post("/token-tester", async (req, res) => {
     const { email } = req.body;
     console.log(email);
     const foodToken_jwt = createToken(email);
-    let link =
-      `${process.env.BASE_URL}/api/redeem-token?token=` + foodToken_jwt;
+    let link = foodToken_jwt;
     const volun = await Volunteer.findOne({ email: email });
     const tokens_list = volun.foodTokens;
     // const check = tokens_list[tokens_list.length - 1].issueTime - Date.now();
@@ -119,7 +119,15 @@ router.post("/token-tester", async (req, res) => {
     };
 
     let img = await QRCode.toDataURL(link);
-    let body = '<h2>Your Token</h2></br> <img src="' + img + '">';
+    let body = ` <h1>Your Food Token</h1>
+    <img class="image-div" src="${img}" alt="${img}"/>
+    <br>
+    <small class="subtitle">Expires in 3 hrs</small>
+    <br>
+    <small>For any queries contact your CCs</small>
+    <small></small>
+    <br>
+    <h3 class="footer">Sent by System Admin , Revels 2022 ❤️ </h3>`;
     let em = await mailer.sendEmailNotif(
       email,
       "FOOD TOKEN",
@@ -139,7 +147,7 @@ router.post("/token-tester", async (req, res) => {
 });
 
 //add hfs check logged in here
-router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
+router.get("/redeem-token", /*isAdminLoggedIn,*/ async (req, res) => {
   try {
     const toBeRedeemed = req.query.token;
     const payload = jwt.verify(toBeRedeemed, "HFS");
@@ -150,13 +158,13 @@ router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
       let obj = tokens_list[i];
       console.log(obj);
       if (obj.token == toBeRedeemed) {
-        console.log(obj);
+        // console.log(obj);
         if (obj.isRedeemed == true) {
           return res.status(400).json({ message: "Token already redeemed!" });
         }
         obj.isRedeemed = true;
         obj.redeemTime = Date.now();
-        console.log(obj);
+        // console.log(obj);
       }
     }
 
@@ -169,7 +177,7 @@ router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
       .json({ message: "Token Redeemed! for email : " + payload.email });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: err.toString() });
+    return res.status(400).json({ message: err.toString() });
   }
 });
 
