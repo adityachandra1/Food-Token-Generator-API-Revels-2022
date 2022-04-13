@@ -65,7 +65,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
       };
 
       let img = await QRCode.toDataURL(link);
-      console.log(img);
+      // console.log(img);
       let body = ` <h1>Your Food Token</h1>
             <img class="image-div" src="${img}" alt="${img}"/>
             <br>
@@ -75,7 +75,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
             <small></small>
             <br>
             <h3 class="footer">Sent by System Admin , Revels 2022 ❤️ </h3>`;
-      console.log(body);
+      // console.log(body);
       // let body = '<h1>Hi</h1>';
       let em = await mailer.sendEmailNotif(
         email,
@@ -83,7 +83,8 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
         body,
         "FOOD TOKEN"
       );
-      console.log(img);
+      console.log(em);
+      // console.log(img);
       tokens_list.push(obj);
       await Volunteer.findOneAndUpdate(
         { email: email },
