@@ -40,7 +40,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
     console.log(emails);
     let error_list = new Array();
     console.log(emails);
-    
+
     for (const email of emails) {
       const foodToken_jwt = createToken(email);
       let link = foodToken_jwt;
@@ -66,8 +66,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
 
       let img = await QRCode.toDataURL(link);
       console.log(img);
-      let body = 
-      ` <h1>Your Food Token</h1>
+      let body = ` <h1>Your Food Token</h1>
             <img class="image-div" src="${img}" alt="${img}"/>
             <br>
             <small class="subtitle">Expires in 3 hrs</small>
@@ -105,7 +104,8 @@ router.post("/token-tester", async (req, res) => {
   try {
     const { email } = req.body;
     const foodToken_jwt = createToken(email);
-    let link = `${process.env.BASE_URL}/api/redeem-token?token=` + foodToken_jwt;
+    let link =
+      `${process.env.BASE_URL}/api/redeem-token?token=` + foodToken_jwt;
     const volun = await Volunteer.findOne({ email: email });
     const tokens_list = volun.foodTokens;
     // const check = tokens_list[tokens_list.length - 1].issueTime - Date.now();
@@ -138,19 +138,19 @@ router.post("/token-tester", async (req, res) => {
 });
 
 //add hfs check logged in here
-router.get("/redeem-token", async (req, res) => {
+router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
   try {
     const toBeRedeemed = req.query.token;
     const payload = jwt.verify(toBeRedeemed, "HFS");
     const volun = await Volunteer.findOne({ email: payload.email });
     const tokens_list = volun.foodTokens;
     console.log(volun);
-        for (let i =0;i<tokens_list.length;i++) {
-          let obj=tokens_list[i];
+    for (let i = 0; i < tokens_list.length; i++) {
+      let obj = tokens_list[i];
       console.log(obj);
       if (obj.token == toBeRedeemed) {
         console.log(obj);
-        if(obj.isRedeemed == true){
+        if (obj.isRedeemed == true) {
           return res.status(400).json({ message: "Token already redeemed!" });
         }
         obj.isRedeemed = true;
