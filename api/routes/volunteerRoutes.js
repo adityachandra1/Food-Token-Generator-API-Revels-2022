@@ -32,15 +32,17 @@ router.post("/create-volunteer", isAdminLoggedIn, async (req, res) => {
 router.get("/get-volunteers-by-cat", isAdminLoggedIn, hasHRAccess,
   async (req, res) => {
     try {
-      console.log("LMAOOO", req.categoryName);
+      console.log("cat Name", req.categoryName);
       const categoryName = req.categoryName;
       let volunteers = [];
       const cat = await Category.findOne({ category: categoryName });
+      console.log(cat);
       if (cat != null) {
-        volunteers = await Volunteer.find({ category: cat["_id"] });
+        volunteers = await Volunteer.find({ category: cat._id });
       } else {
         volunteers = await Volunteer.find({});
       }
+      console.log(volunteers);
       res.send(volunteers);
     } catch (error) {
       console.log(error);
