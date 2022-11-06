@@ -81,7 +81,7 @@ router.post("/create-token", isAdminLoggedIn, hasHRAccess, async (req, res) => {
         email,
         "FOOD TOKEN",
         body,
-        "FOOD TOKEN" 
+        "FOOD TOKEN"
       );
       console.log(em);
       // console.log(img);
@@ -147,7 +147,7 @@ router.post("/token-tester", async (req, res) => {
 });
 
 //add hfs check logged in here
-router.get("/redeem-token", /*isAdminLoggedIn,*/ async (req, res) => {
+router.get("/redeem-token", isAdminLoggedIn, async (req, res) => {
   try {
     const toBeRedeemed = req.query.token;
     const payload = jwt.verify(toBeRedeemed, "HFS");
